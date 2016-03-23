@@ -35,6 +35,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
     let pickerView = UIPickerView()
     var backButton = UIBarButtonItem()
     var nextButton = UIBarButtonItem()
+    let toolBar = UIToolbar()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,12 +53,11 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
         datepickerTextField.hidden = true
         
         
-        
-        let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.Default
+        toolBar.barStyle = UIBarStyle.Black
         toolBar.translucent = true
         toolBar.alpha = 0.95
         toolBar.tintColor = UIColor.whiteColor()
+        
         toolBar.sizeToFit()
         
         
