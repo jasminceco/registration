@@ -20,11 +20,12 @@
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="firsname" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qAx-3t-zrF" customClass="CustomTextFields" customModule="registration" customModuleProvider="target">
                                 <rect key="frame" x="167" y="285" width="266" height="40"/>
-                                <color key="backgroundColor" red="0.79215686269999996" green="0.79215686269999996" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.16078431372549018" green="0.6588235294117647" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Mr6-7A-4bP"/>
                                     <constraint firstAttribute="width" constant="266" id="ru4-lP-efZ"/>
                                 </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                 <userDefinedRuntimeAttributes>
@@ -38,11 +39,12 @@
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="gender" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ACv-cd-vm8" customClass="CustomTextFields" customModule="registration" customModuleProvider="target">
                                 <rect key="frame" x="167" y="333" width="266" height="33"/>
-                                <color key="backgroundColor" red="0.79215686269999996" green="0.79215686269999996" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.16078431372549018" green="0.6588235294117647" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Rnk-mN-ZjT"/>
                                     <constraint firstAttribute="width" constant="266" id="cEM-DN-zwm"/>
                                 </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
@@ -56,11 +58,12 @@
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="datePicker" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lf4-Hv-oL7" customClass="CustomTextFields" customModule="registration" customModuleProvider="target">
                                 <rect key="frame" x="167" y="376" width="266" height="33"/>
-                                <color key="backgroundColor" red="0.79215686269999996" green="0.79215686269999996" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.16078431372549018" green="0.6588235294117647" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="vye-UJ-46V"/>
                                     <constraint firstAttribute="width" constant="266" id="zud-Fo-dwy"/>
                                 </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
@@ -76,13 +79,13 @@
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bTZ-ha-gIf">
-                                <rect key="frame" x="192" y="211" width="216" height="41"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="30"/>
+                                <rect key="frame" x="228" y="91" width="144" height="27.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REGISTRATION" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KkE-fs-g5z">
-                                <rect key="frame" x="193" y="28" width="213.5" height="41"/>
+                                <rect key="frame" x="193" y="43" width="213.5" height="41"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="30"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -100,11 +103,11 @@
                             <constraint firstItem="ACv-cd-vm8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8b4-QF-W41"/>
                             <constraint firstItem="ACv-cd-vm8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="318" id="CQB-rB-Rkp"/>
                             <constraint firstItem="bTZ-ha-gIf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="J3s-pb-xaQ"/>
-                            <constraint firstItem="bTZ-ha-gIf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="191" id="PwY-t8-hcc"/>
-                            <constraint firstItem="aIY-lH-XLI" firstAttribute="top" secondItem="bTZ-ha-gIf" secondAttribute="bottom" constant="4" id="ZeQ-RI-OJW"/>
+                            <constraint firstItem="aIY-lH-XLI" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="256" id="KTk-2O-3aT"/>
+                            <constraint firstItem="bTZ-ha-gIf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="71" id="PwY-t8-hcc"/>
                             <constraint firstItem="qAx-3t-zrF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bCE-Lj-q6M"/>
                             <constraint firstItem="qAx-3t-zrF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="265" id="iIO-dw-Fn9"/>
-                            <constraint firstItem="KkE-fs-g5z" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="ir2-jE-crC"/>
+                            <constraint firstItem="KkE-fs-g5z" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="23" id="ir2-jE-crC"/>
                             <constraint firstItem="KkE-fs-g5z" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rxT-th-XRz"/>
                             <constraint firstItem="lf4-Hv-oL7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="367" id="stz-vG-XQ5"/>
                             <constraint firstItem="lf4-Hv-oL7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vmi-mt-y1b"/>
