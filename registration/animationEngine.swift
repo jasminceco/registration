@@ -55,24 +55,5 @@ class AnimatinEngine {
         }
         
     }
-    func animateOnSreen()
-    {
         
-            var index = 0
-            
-            repeat{
-                let moveAnim = POPSpringAnimation(propertyNamed: kPOPLayoutConstraintConstant)
-                moveAnim.toValue = AnimatinEngine.offScreenLeftPosition.x
-                moveAnim.springBounciness = 12
-                moveAnim.springSpeed = 12
-                
-                let con = self.constraints[index]
-                con.pop_addAnimation(moveAnim, forKey: "moveOnScreen")
-                index = index + 1
-                
-            }while(index < self.constraints.count)
-        
-        
-    }
-    
 }
