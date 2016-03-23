@@ -33,10 +33,13 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
     
     var genderOption = ["Male", "Female", "I would rather Not Say"]
     let pickerView = UIPickerView()
+    var backButton = UIBarButtonItem()
+    var nextButton = UIBarButtonItem()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         registation = Registration()
+        textFieldOutlet.becomeFirstResponder()
         descriptionLabel.hidden = true
         textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"first name", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
         // SETING PICKER FOR GENDER TEXT FIELD //
@@ -47,6 +50,9 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
         
         genderTextFileld.hidden = true
         datepickerTextField.hidden = true
+        
+        
+        
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.Default
         toolBar.translucent = true
@@ -55,11 +61,14 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
         toolBar.sizeToFit()
         
         
-        let doneButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Done, target: self, action: "nextBtnPressed:")
+        nextButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Done, target: self, action: "nextBtnPressed:")
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-        let cancelButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Done , target: self, action: "backPressed:")
+       
+        backButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Done , target: self, action: "backPressed:")
         
-        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        backButton.enabled = false
+        
+        toolBar.setItems([backButton, spaceButton, nextButton], animated: false)
         toolBar.userInteractionEnabled = true
         toolBar.backgroundColor = UIColor.darkGrayColor()
         textFieldOutlet.inputAccessoryView = toolBar
@@ -83,6 +92,20 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
         dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
         datepickerTextField.text = dateFormatter.stringFromDate(sender.date)
+    }
+    func isValidEmail(testStr:String) -> Bool {
+        
+        
+        print("validate emilId: \(testStr)")
+        
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        
+        let result = emailTest.evaluateWithObject(testStr)
+        
+        return result
+        
     }
     
     
@@ -148,6 +171,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
                 registration.Registration.personalDetails.firsName = textFieldOutlet.text!
                 textFieldOutlet.text = ""
                 textFieldOutlet.tag = 1
+                backButton.enabled = true
             }
         case 1:
             if textFieldOutlet.text == ""
@@ -220,13 +244,15 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             
             
         case 6:
-            if textFieldOutlet.text == ""
+            if !isValidEmail(textFieldOutlet.text!)
             {
+                
                 descriptionLabel.hidden = false
-                descriptionLabel.text = "Email is mandatory!"
+                descriptionLabel.text = "Not valid email address!"
             }
             else
             {
+                
                 descriptionLabel.hidden = true
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter phone Number", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
             registration.Registration.ContactDetails.email = textFieldOutlet.text!
@@ -304,10 +330,11 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
     
     
     @IBAction func backPressed(sender: customButton) {
-        
+       
         
         if textFieldOutlet.tag >= 0 {
             textFieldOutlet.tag = textFieldOutlet.tag - 1
+            
         }
         
         animate()
