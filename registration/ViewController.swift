@@ -142,11 +142,11 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
         
     }
     func refresh(){
-        print("firstname is: \(registration.Registration.personalDetails.firsName)")
-        print("last name is: \(registration.Registration.personalDetails.lastName)")
-        print("date of birth is:\(registration.Registration.personalDetails.dateOfBirth)")
-        print("gender is: \(registration.Registration.personalDetails.gender)")
-        print("address is: \(registration.Registration.ContactDetails.address)")
+        print("firstname is: \(registration.Registration.firsName)")
+        print("last name is: \(registration.Registration.lastName)")
+        print("date of birth is:\(registration.Registration.dateOfBirth)")
+        print("gender is: \(registration.Registration.gender)")
+        print("address is: \(registration.Registration.address)")
         print("textfield tag is\(textFieldOutlet.tag)")
     }
     
@@ -168,7 +168,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
                 descriptionLabel.hidden = true
                 
                 textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter last name", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-                registration.Registration.personalDetails.firsName = textFieldOutlet.text!
+                registration.Registration.firsName = textFieldOutlet.text!
                 textFieldOutlet.text = ""
                 textFieldOutlet.tag = 1
                 backButton.enabled = true
@@ -183,7 +183,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             {
                 descriptionLabel.hidden = true
                 datepickerTextField.attributedPlaceholder = NSAttributedString(string:"enter date of birth", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-                registration.Registration.personalDetails.lastName = textFieldOutlet.text!
+                registration.Registration.lastName = textFieldOutlet.text!
                 dateTopConst.constant = 280
                 textFieldOutlet.text = ""
                 textFieldOutlet.tag = 2
@@ -196,7 +196,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             
         case 2:
             genderTextFileld.attributedPlaceholder = NSAttributedString(string:"enter gender", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            registration.Registration.personalDetails.dateOfBirth = datepickerTextField.text!
+            registration.Registration.dateOfBirth = datepickerTextField.text!
             textFieldOutlet.text = ""
             textFieldOutlet.tag = 3
             datepickerTextField.hidden = true
@@ -206,7 +206,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             genderTextFileld.hidden = false
         case 3:
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter home address", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            registration.Registration.personalDetails.gender = genderTextFileld.text!
+            registration.Registration.gender = genderTextFileld.text!
             textFieldOutlet.text = ""
             textFieldOutlet.tag = 4
             textFieldOutlet.hidden = false
@@ -225,7 +225,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             {
                 descriptionLabel.hidden = true
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter zip code", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            registration.Registration.ContactDetails.address = textFieldOutlet.text!
+            registration.Registration.address = textFieldOutlet.text!
             textFieldOutlet.text = ""
             textFieldOutlet.tag = 5
             textFieldOutlet.resignFirstResponder()
@@ -235,7 +235,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             
         case 5:
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter email", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            registration.Registration.ContactDetails.zipCode = textFieldOutlet.text!
+            registration.Registration.zipCode = textFieldOutlet.text!
             textFieldOutlet.text = ""
             textFieldOutlet.resignFirstResponder()
             textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
@@ -255,7 +255,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
                 
                 descriptionLabel.hidden = true
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter phone Number", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            registration.Registration.ContactDetails.email = textFieldOutlet.text!
+            registration.Registration.email = textFieldOutlet.text!
             textFieldOutlet.text = ""
             textFieldOutlet.resignFirstResponder()
             textFieldOutlet.keyboardType = UIKeyboardType.DecimalPad
@@ -274,7 +274,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
                 descriptionLabel.hidden = true
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter username", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
             
-            registration.Registration.ContactDetails.phoneNumber = textFieldOutlet.text!
+            registration.Registration.phoneNumber = textFieldOutlet.text!
             textFieldOutlet.resignFirstResponder()
             textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
             textFieldOutlet.becomeFirstResponder()
@@ -286,7 +286,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter password", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
             
-            registration.Registration.securityDetails.username = textFieldOutlet.text!
+            registration.Registration.username = textFieldOutlet.text!
             
             textFieldOutlet.text = ""
             textFieldOutlet.tag = 9
@@ -303,21 +303,21 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
                 descriptionLabel.hidden = true
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"confirm password", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
             
-            registration.Registration.securityDetails.password = textFieldOutlet.text!
+            registration.Registration.password = textFieldOutlet.text!
             
             textFieldOutlet.text = ""
             textFieldOutlet.tag = 10
             }
             
         case 10:
-            if textFieldOutlet.text != registration.Registration.securityDetails.password
+            if textFieldOutlet.text != registration.Registration.password
             {
                 descriptionLabel.hidden = false
                 descriptionLabel.text = "password do not macth!"
               
             }else{
                 descriptionLabel.hidden = true
-                registration.Registration.securityDetails.confirmPassword = textFieldOutlet.text!
+                registration.Registration.confirmPassword = textFieldOutlet.text!
                 
                 /// sada sve treba poslati na server
             }
@@ -327,10 +327,17 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
         }
         
     }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if textFieldOutlet.tag < 0{
+            backButton.enabled = false
+            textFieldOutlet.tag = textFieldOutlet.tag + 1
+        }
+    }
     
     
     @IBAction func backPressed(sender: customButton) {
-       
+        
         
         if textFieldOutlet.tag >= 0 {
             textFieldOutlet.tag = textFieldOutlet.tag - 1
@@ -341,14 +348,14 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
         
         switch textFieldOutlet.tag {
         case 0:
-            textFieldOutlet.text = registration.Registration.personalDetails.firsName
+            textFieldOutlet.text = registration.Registration.firsName
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             descriptionLabel.hidden = false
             descriptionLabel.text = "Enter First Name"
             titleLabel.text = "Personal details"
             
         case 1:
-            textFieldOutlet.text = registration.Registration.personalDetails.lastName
+            textFieldOutlet.text = registration.Registration.lastName
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Personal details"
             descriptionLabel.hidden = false
@@ -358,7 +365,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             genderTextFileld.hidden = true
             textFieldOutlet.becomeFirstResponder()
         case 2:
-            datepickerTextField.text = registration.Registration.personalDetails.dateOfBirth
+            datepickerTextField.text = registration.Registration.dateOfBirth
             datepickerTextField.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Personal details"
             descriptionLabel.hidden = false
@@ -367,7 +374,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             datepickerTextField.hidden = false
             datepickerTextField.becomeFirstResponder()
         case 3:
-            textFieldOutlet.text = registration.Registration.personalDetails.gender
+            textFieldOutlet.text = registration.Registration.gender
             genderTextFileld.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Personal details"
             descriptionLabel.hidden = false
@@ -376,7 +383,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             datepickerTextField.hidden = true
             genderTextFileld.becomeFirstResponder()
         case 4:
-            textFieldOutlet.text = registration.Registration.ContactDetails.address
+            textFieldOutlet.text = registration.Registration.address
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Contact details"
             descriptionLabel.hidden = false
@@ -385,7 +392,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
             textFieldOutlet.becomeFirstResponder()
         case 5:
-            textFieldOutlet.text = registration.Registration.ContactDetails.zipCode
+            textFieldOutlet.text = registration.Registration.zipCode
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Contact details"
             descriptionLabel.hidden = false
@@ -394,7 +401,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             textFieldOutlet.keyboardType = UIKeyboardType.DecimalPad
             textFieldOutlet.becomeFirstResponder()
         case 6:
-            textFieldOutlet.text = registration.Registration.ContactDetails.email
+            textFieldOutlet.text = registration.Registration.email
             titleLabel.text = "Contact details"
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             descriptionLabel.hidden = false
@@ -403,7 +410,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
             textFieldOutlet.becomeFirstResponder()
         case 7:
-            textFieldOutlet.text = registration.Registration.ContactDetails.phoneNumber
+            textFieldOutlet.text = registration.Registration.phoneNumber
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Contact details"
             descriptionLabel.hidden = false
@@ -412,7 +419,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             textFieldOutlet.keyboardType = UIKeyboardType.DecimalPad
             textFieldOutlet.becomeFirstResponder()
         case 8:
-            textFieldOutlet.text = registration.Registration.securityDetails.username
+            textFieldOutlet.text = registration.Registration.username
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Security details"
             descriptionLabel.hidden = false
@@ -421,7 +428,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
             textFieldOutlet.becomeFirstResponder()
         case 9:
-            textFieldOutlet.text = registration.Registration.securityDetails.password
+            textFieldOutlet.text = registration.Registration.password
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Security details"
             descriptionLabel.hidden = false
