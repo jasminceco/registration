@@ -213,7 +213,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             genderTextFileld.hidden = true
             textFieldOutlet.becomeFirstResponder()
             genderTextFileld.resignFirstResponder()
-            titleLabel.text = "ContactDetails"
+            titleLabel.text = "Contact details"
             
         case 4:
             if textFieldOutlet.text == ""
@@ -279,7 +279,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
             textFieldOutlet.becomeFirstResponder()
             textFieldOutlet.text = ""
-            titleLabel.text = "Security Details"
+            titleLabel.text = "Security details"
             textFieldOutlet.tag = 8
             }
         case 8:
