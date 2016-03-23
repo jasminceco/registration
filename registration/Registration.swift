@@ -15,7 +15,8 @@ class Registration {
         static var firsName: String = ""
         static var lastName: String = ""
         static var dateOfBirth: String = ""
-        static var gender: String = ""
+        static var gender : String = ""
+
     }
     struct ContactDetails {
         static var address: String = ""

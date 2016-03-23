@@ -15,6 +15,9 @@
 		BEB73B2C1CA2AD80008B29B9 /* registrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB73B2B1CA2AD80008B29B9 /* registrationTests.swift */; };
 		BEB73B371CA2AD80008B29B9 /* registrationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB73B361CA2AD80008B29B9 /* registrationUITests.swift */; };
 		BEB73B481CA2AF8F008B29B9 /* Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB73B471CA2AF8F008B29B9 /* Registration.swift */; };
+		BEB73B4C1CA2B19F008B29B9 /* customTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB73B4B1CA2B19F008B29B9 /* customTextFields.swift */; };
+		BEB73B4E1CA2B47E008B29B9 /* customButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB73B4D1CA2B47E008B29B9 /* customButton.swift */; };
+		BEB73B501CA2BFC9008B29B9 /* animationEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB73B4F1CA2BFC9008B29B9 /* animationEngine.swift */; };
 		EB859163BE8A657C236046B2 /* Pods_registration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9337E8F16F18574C372E236E /* Pods_registration.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +57,9 @@
 		BEB73B381CA2AD80008B29B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEB73B441CA2AEC3008B29B9 /* registration-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "registration-Bridging-Header.h"; sourceTree = "<group>"; };
 		BEB73B471CA2AF8F008B29B9 /* Registration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Registration.swift; sourceTree = "<group>"; };
+		BEB73B4B1CA2B19F008B29B9 /* customTextFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = customTextFields.swift; sourceTree = "<group>"; };
+		BEB73B4D1CA2B47E008B29B9 /* customButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = customButton.swift; sourceTree = "<group>"; };
+		BEB73B4F1CA2BFC9008B29B9 /* animationEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = animationEngine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,9 +130,10 @@
 		BEB73B151CA2AD80008B29B9 /* registration */ = {
 			isa = PBXGroup;
 			children = (
+				BEB73B4A1CA2B177008B29B9 /* custom */,
+				BEB73B491CA2B16D008B29B9 /* Model */,
 				BEB73B161CA2AD80008B29B9 /* AppDelegate.swift */,
 				BEB73B181CA2AD80008B29B9 /* ViewController.swift */,
-				BEB73B471CA2AF8F008B29B9 /* Registration.swift */,
 				BEB73B1A1CA2AD80008B29B9 /* Main.storyboard */,
 				BEB73B1D1CA2AD80008B29B9 /* Assets.xcassets */,
 				BEB73B1F1CA2AD80008B29B9 /* LaunchScreen.storyboard */,
@@ -152,6 +159,24 @@
 				BEB73B381CA2AD80008B29B9 /* Info.plist */,
 			);
 			path = registrationUITests;
+			sourceTree = "<group>";
+		};
+		BEB73B491CA2B16D008B29B9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BEB73B471CA2AF8F008B29B9 /* Registration.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		BEB73B4A1CA2B177008B29B9 /* custom */ = {
+			isa = PBXGroup;
+			children = (
+				BEB73B4B1CA2B19F008B29B9 /* customTextFields.swift */,
+				BEB73B4D1CA2B47E008B29B9 /* customButton.swift */,
+				BEB73B4F1CA2BFC9008B29B9 /* animationEngine.swift */,
+			);
+			name = custom;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -336,9 +361,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEB73B4C1CA2B19F008B29B9 /* customTextFields.swift in Sources */,
 				BEB73B191CA2AD80008B29B9 /* ViewController.swift in Sources */,
 				BEB73B481CA2AF8F008B29B9 /* Registration.swift in Sources */,
 				BEB73B171CA2AD80008B29B9 /* AppDelegate.swift in Sources */,
+				BEB73B501CA2BFC9008B29B9 /* animationEngine.swift in Sources */,
+				BEB73B4E1CA2B47E008B29B9 /* customButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
