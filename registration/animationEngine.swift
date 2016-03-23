@@ -32,6 +32,7 @@ class AnimatinEngine {
         }
         self.constraints = constraints
     }
+   
     
     func animateOfSreen(delay: Int)
     {
@@ -54,11 +55,9 @@ class AnimatinEngine {
         }
         
     }
-    func animateOnSreen(delay: Int)
+    func animateOnSreen()
     {
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(delay) * Double(NSEC_PER_MSEC)))
         
-        dispatch_after(time, dispatch_get_main_queue()) {
             var index = 0
             
             repeat{
@@ -72,7 +71,7 @@ class AnimatinEngine {
                 index = index + 1
                 
             }while(index < self.constraints.count)
-        }
+        
         
     }
     
