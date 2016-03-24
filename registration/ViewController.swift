@@ -145,20 +145,10 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             textfield.velocity = 0.5
             textfield.animate()
         }
-        
-        func animateOnMisstype(textfields: [DesignableTextField])
-        {
-            for textfield in textfields{
-                textfield.animation = "shake"
-                textfield.curve = "easeOutSine"
-                textfield.force = 1.7
-                textfield.duration = 0.7
-                textfield.animate()
-            }
-            
-            
-        }
     }
+    
+   
+    
     func refresh(){
         print("firstname is: \(registration.Registration.firsName)")
         print("last name is: \(registration.Registration.lastName)")
@@ -166,11 +156,10 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
         print("gender is: \(registration.Registration.gender)")
         print("address is: \(registration.Registration.address)")
         print("zipCode is: \(registration.Registration.zipCode)")
-        
-          print("email is: \(registration.Registration.email)")
-          print("phoneNumber is: \(registration.Registration.phoneNumber)")
-          print("username is: \(registration.Registration.username)")
-          print("password is: \(registration.Registration.password)")
+        print("email is: \(registration.Registration.email)")
+        print("phoneNumber is: \(registration.Registration.phoneNumber)")
+        print("username is: \(registration.Registration.username)")
+        print("password is: \(registration.Registration.password)")
         print("confirmPassword is: \(registration.Registration.confirmPassword)")
         print("textfield tag is\(textFieldOutlet.tag)")
     }
@@ -179,8 +168,8 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
     
     @IBAction func nextBtnPressed(sender: customButton) {
         
-        
         animate([textFieldOutlet, datepickerTextField, genderTextFileld])
+        
         switch textFieldOutlet.tag {
         case 0:
             if textFieldOutlet.text == ""
@@ -197,6 +186,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
                 textFieldOutlet.text = ""
                 textFieldOutlet.tag = 1
                 backButton.enabled = true
+                
             }
         case 1:
             if textFieldOutlet.text == ""
@@ -209,7 +199,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
                 descriptionLabel.hidden = true
                 datepickerTextField.attributedPlaceholder = NSAttributedString(string:"enter date of birth", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
                 registration.Registration.lastName = textFieldOutlet.text!
-                dateTopConst.constant = 280
+                //  dateTopConst.constant = 280
                 textFieldOutlet.text = ""
                 textFieldOutlet.tag = 2
                 textFieldOutlet.hidden = true
@@ -227,7 +217,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             datepickerTextField.hidden = true
             datepickerTextField.resignFirstResponder()
             genderTextFileld.becomeFirstResponder()
-            genderTopConst.constant = 280
+            // genderTopConst.constant = 280
             genderTextFileld.hidden = false
         case 3:
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter home address", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
@@ -353,31 +343,19 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
         }
         
     }
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        if textFieldOutlet.tag < 0{
-            backButton.enabled = false
-            textFieldOutlet.tag = textFieldOutlet.tag + 1
-        }
-        if textFieldOutlet.tag > 10{
-            nextButton.enabled = false
-            textFieldOutlet.tag = textFieldOutlet.tag - 1
-        }
-    }
     
     
     @IBAction func backPressed(sender: customButton) {
         
-        
         if textFieldOutlet.tag >= 0 {
             textFieldOutlet.tag = textFieldOutlet.tag - 1
-            
         }
         
         animate([textFieldOutlet, datepickerTextField, genderTextFileld])
         
         switch textFieldOutlet.tag {
         case 0:
+            backButton.enabled = false
             textFieldOutlet.text = registration.Registration.firsName
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             descriptionLabel.hidden = false
