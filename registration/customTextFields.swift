@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import Spring
 
 @IBDesignable
-class CustomTextFields: UITextField{
+class CustomTextFields: DesignableTextField{
     
     @IBInspectable var inset: CGFloat = 0
     

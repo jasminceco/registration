@@ -8,30 +8,26 @@
 
 import UIKit
 import pop
-
+import Spring
 
 class ViewController: UIViewController,  UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var dateTopConst: NSLayoutConstraint!
     @IBOutlet weak var genderTopConst: NSLayoutConstraint!
-    
     @IBOutlet weak var textfieldCenter: NSLayoutConstraint!
-    
     @IBOutlet weak var genderCentarConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var dateCenterConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var genderTextFileld: DesignableTextField!
+    @IBOutlet weak var datepickerTextField: DesignableTextField!
+    @IBOutlet weak var textFieldOutlet: DesignableTextField!
     
-    @IBOutlet weak var genderTextFileld: CustomTextFields!
-    
-    @IBOutlet weak var datepickerTextField: CustomTextFields!
-    @IBOutlet weak var textFieldOutlet: CustomTextFields!
     var animEngine : AnimatinEngine!
     var registation = Registration()
     
     var genderOption = ["Male", "Female", "I would rather Not Say"]
+    
     let pickerView = UIPickerView()
     var backButton = UIBarButtonItem()
     var nextButton = UIBarButtonItem()
@@ -63,7 +59,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
         
         nextButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Done, target: self, action: "nextBtnPressed:")
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-       
+        
         backButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Done , target: self, action: "backPressed:")
         
         backButton.enabled = false
@@ -135,11 +131,33 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
         return pickerLabel
     }
     
-    func animate() {
-        self.animEngine = AnimatinEngine(constraints: [textfieldCenter, genderCentarConstraint, dateCenterConstraint])
+    func animate(textfields:[DesignableTextField]) {
+        //        self.animEngine = AnimatinEngine(constraints: [textfieldCenter, genderCentarConstraint, dateCenterConstraint])
+        //
+        //        self.animEngine.animateOfSreen(5)
+        for textfield in textfields{
+            textfield.animation = "squeezeRight"
+            textfield.curve = "easeInBack"
+            textfield.force = 2.9
+            textfield.duration = 0.5
+            textfield.delay = 0.1
+            textfield.damping = 0.7
+            textfield.velocity = 0.5
+            textfield.animate()
+        }
         
-        self.animEngine.animateOfSreen(5)
-        
+        func animateOnMisstype(textfields: [DesignableTextField])
+        {
+            for textfield in textfields{
+                textfield.animation = "shake"
+                textfield.curve = "easeOutSine"
+                textfield.force = 1.7
+                textfield.duration = 0.7
+                textfield.animate()
+            }
+            
+            
+        }
     }
     func refresh(){
         print("firstname is: \(registration.Registration.firsName)")
@@ -147,6 +165,13 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
         print("date of birth is:\(registration.Registration.dateOfBirth)")
         print("gender is: \(registration.Registration.gender)")
         print("address is: \(registration.Registration.address)")
+        print("zipCode is: \(registration.Registration.zipCode)")
+        
+          print("email is: \(registration.Registration.email)")
+          print("phoneNumber is: \(registration.Registration.phoneNumber)")
+          print("username is: \(registration.Registration.username)")
+          print("password is: \(registration.Registration.password)")
+        print("confirmPassword is: \(registration.Registration.confirmPassword)")
         print("textfield tag is\(textFieldOutlet.tag)")
     }
     
@@ -154,8 +179,8 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
     
     @IBAction func nextBtnPressed(sender: customButton) {
         
-        refresh()
-        animate()
+        
+        animate([textFieldOutlet, datepickerTextField, genderTextFileld])
         switch textFieldOutlet.tag {
         case 0:
             if textFieldOutlet.text == ""
@@ -224,13 +249,13 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             else
             {
                 descriptionLabel.hidden = true
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter zip code", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            registration.Registration.address = textFieldOutlet.text!
-            textFieldOutlet.text = ""
-            textFieldOutlet.tag = 5
-            textFieldOutlet.resignFirstResponder()
-            textFieldOutlet.keyboardType = UIKeyboardType.DecimalPad
-            textFieldOutlet.becomeFirstResponder()
+                textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter zip code", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+                registration.Registration.address = textFieldOutlet.text!
+                textFieldOutlet.text = ""
+                textFieldOutlet.tag = 5
+                textFieldOutlet.resignFirstResponder()
+                textFieldOutlet.keyboardType = UIKeyboardType.DecimalPad
+                textFieldOutlet.becomeFirstResponder()
             }
             
         case 5:
@@ -254,14 +279,14 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             {
                 
                 descriptionLabel.hidden = true
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter phone Number", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            registration.Registration.email = textFieldOutlet.text!
-            textFieldOutlet.text = ""
-            textFieldOutlet.resignFirstResponder()
-            textFieldOutlet.keyboardType = UIKeyboardType.DecimalPad
-            textFieldOutlet.becomeFirstResponder()
-            
-            textFieldOutlet.tag = 7
+                textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter phone Number", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+                registration.Registration.email = textFieldOutlet.text!
+                textFieldOutlet.text = ""
+                textFieldOutlet.resignFirstResponder()
+                textFieldOutlet.keyboardType = UIKeyboardType.DecimalPad
+                textFieldOutlet.becomeFirstResponder()
+                
+                textFieldOutlet.tag = 7
             }
         case 7:
             if textFieldOutlet.text == ""
@@ -272,15 +297,15 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             else
             {
                 descriptionLabel.hidden = true
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter username", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            
-            registration.Registration.phoneNumber = textFieldOutlet.text!
-            textFieldOutlet.resignFirstResponder()
-            textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
-            textFieldOutlet.becomeFirstResponder()
-            textFieldOutlet.text = ""
-            titleLabel.text = "Security details"
-            textFieldOutlet.tag = 8
+                textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter username", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+                
+                registration.Registration.phoneNumber = textFieldOutlet.text!
+                textFieldOutlet.resignFirstResponder()
+                textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
+                textFieldOutlet.becomeFirstResponder()
+                textFieldOutlet.text = ""
+                titleLabel.text = "Security details"
+                textFieldOutlet.tag = 8
             }
         case 8:
             
@@ -301,12 +326,13 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             else
             {
                 descriptionLabel.hidden = true
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"confirm password", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            
-            registration.Registration.password = textFieldOutlet.text!
-            
-            textFieldOutlet.text = ""
-            textFieldOutlet.tag = 10
+                textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"confirm password", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+                
+                registration.Registration.password = textFieldOutlet.text!
+                
+                textFieldOutlet.text = ""
+                textFieldOutlet.tag = 10
+                refresh()
             }
             
         case 10:
@@ -314,7 +340,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             {
                 descriptionLabel.hidden = false
                 descriptionLabel.text = "password do not macth!"
-              
+                
             }else{
                 descriptionLabel.hidden = true
                 registration.Registration.confirmPassword = textFieldOutlet.text!
@@ -333,6 +359,10 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             backButton.enabled = false
             textFieldOutlet.tag = textFieldOutlet.tag + 1
         }
+        if textFieldOutlet.tag > 10{
+            nextButton.enabled = false
+            textFieldOutlet.tag = textFieldOutlet.tag - 1
+        }
     }
     
     
@@ -344,7 +374,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
             
         }
         
-        animate()
+        animate([textFieldOutlet, datepickerTextField, genderTextFileld])
         
         switch textFieldOutlet.tag {
         case 0:
