@@ -21,4 +21,5 @@ struct Registration {
         static var username: String = ""
         static var password: String = ""
         static var confirmPassword: String = ""
+        static var postImage: UIImage!
 }

@@ -9,6 +9,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SCLAlertView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Spring.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>pop.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>210EBF034FE3273BAC52A8B54995FAA3</key>
+		<key>0B3CADC6BF9D541AFFC496B7C84A33E0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7E0ED4E8A613639C4F53B8D24806E4F0</key>
+		<key>3E2C7ABC2CCAD8BF5E01A08807908EED</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>62E1F12A4E8EEAEB20CCBCFDB8040A4D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FF1CF1A9F721DDF7B42507CFCB7A710F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

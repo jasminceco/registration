@@ -9,8 +9,12 @@
 import UIKit
 import pop
 import Spring
+import SCLAlertView
 
-class ViewController: UIViewController,  UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+
+
+
+class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var dateTopConst: NSLayoutConstraint!
@@ -23,8 +27,25 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
     @IBOutlet weak var datepickerTextField: DesignableTextField!
     @IBOutlet weak var textFieldOutlet: DesignableTextField!
     
+    @IBOutlet weak var userImage: UIImageView!
+    
+    @IBOutlet weak var backroundImage: UIImageView!
+    let selectedImage = UIImagePickerController()
+    let alert = SCLAlertView()
     var animEngine : AnimatinEngine!
     var registation = Registration()
+    
+    struct animation
+    {
+        static var swipeRight: String = "squeezeRight"
+        static var flipY:String = "flipY"
+        
+        struct type
+        {
+            static var spring: String = "spring"
+            static var easeInBack: String = "easeInBack"
+        }
+    }
     
     var genderOption = ["Male", "Female", "I would rather Not Say"]
     
@@ -136,18 +157,52 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
         //
         //        self.animEngine.animateOfSreen(5)
         for textfield in textfields{
-            textfield.animation = "squeezeRight"
-            textfield.curve = "easeInBack"
+            textfield.animation = animation.swipeRight
+            textfield.curve = animation.type.spring
             textfield.force = 2.9
-            textfield.duration = 0.5
+            textfield.duration = 1
             textfield.delay = 0.1
             textfield.damping = 0.7
             textfield.velocity = 0.5
             textfield.animate()
         }
     }
+    @IBAction func selectPictureFromUserLibaryButton(sender: AnyObject) {
+        textFieldOutlet.resignFirstResponder()
+        selectedImage.delegate = self
+        
+        let alertNew =  SCLAlertView()
+        alertNew.addButton("Photo Library", action: { () -> Void in
+            print("Photo Library pressed")
+            let sourceType:UIImagePickerControllerSourceType? = UIImagePickerControllerSourceType.PhotoLibrary
+            self.selectedImage.sourceType = sourceType!
+            self.selectedImage.allowsEditing = false
+            self.presentViewController(self.selectedImage, animated: true, completion: nil)
+        })
+        
+        alertNew.addButton("Camera", action: { () -> Void in
+            print("Camera pressed")
+            if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil{
+                let sourceType:UIImagePickerControllerSourceType? = UIImagePickerControllerSourceType.Camera
+                self.selectedImage.sourceType = sourceType!
+                self.selectedImage.allowsEditing = false
+                self.presentViewController(self.selectedImage, animated: true, completion: nil)
+            }else{
+                print("No camera")
+                self.noCamera()
+            }
+            
+        })
+        
+        alertNew.showCloseButton = true
+        alertNew.showSuccess("Change profile image", subTitle: "Choose image source", closeButtonTitle: "Cancel")
+    }
+    // if no Camera!!
+    func noCamera()
+    {
+        alert.showWarning("No Camera!", subTitle: "Try diferent source.")
+    }
     
-   
     
     func refresh(){
         print("firstname is: \(registration.Registration.firsName)")
@@ -186,6 +241,7 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
                 textFieldOutlet.text = ""
                 textFieldOutlet.tag = 1
                 backButton.enabled = true
+                userImage.hidden = true
                 
             }
         case 1:
@@ -450,4 +506,72 @@ class ViewController: UIViewController,  UINavigationControllerDelegate, UIImage
         }
     }
 }
+extension ViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate
+{
+    // postavljanje izabrane slike na Avatar (prezentovanje korisniku i slanje na server)
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage selectedImage: UIImage, editingInfo: [String : AnyObject]?) {
+        
+        let alertNew =  SCLAlertView()
+        alertNew.addButton("Save Image", action: { () -> Void in
+            print("Save Image pressed")
+            
+            //TODO: -SAVE Profile Image to server
+            
+            //here you save image and place the selectedImage on screen
+            
+            // for now selectedImage it will be only shown on the screen
+            
+            // use this one to Resize Image, Store New profile image and Send it to Server
+            registration.Registration.postImage = self.ResizeImage(selectedImage, targetSize: CGSize(width: 200, height: 200))
+            self.userImage.hidden = true
+            
+            self.backroundImage.image = registration.Registration.postImage
+            
+            self.userImage.layer.cornerRadius = self.userImage.frame.width / 2
+            self.userImage.clipsToBounds = true
+            self.dismissViewControllerAnimated(true, completion: nil)
+            self.textFieldOutlet.becomeFirstResponder()
+            
+            //            if let imageData = UIImagePNGRepresentation(self.userImage.image!)
+            //            {
+            //                let base64String = imageData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+            //
+            //              //  FBZClient.sharedInstance.SetAvatarPicture(base64String)
+            //            }
+        })
+        alertNew.showCloseButton = true
+        alertNew.showSuccess("New image selected!", subTitle: "Do you wont to save it?", closeButtonTitle: "Choose different image")
+        
+    }
+    
+    func ResizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / image.size.width
+        let heightRatio = targetSize.height / image.size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSizeMake(size.width * heightRatio, size.height * heightRatio)
+        } else {
+            newSize = CGSizeMake(size.width * widthRatio,  size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRectMake(0, 0, newSize.width, newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.drawInRect(rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+    
+    
+    
+}
+
 

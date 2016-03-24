@@ -1,9 +1,11 @@
 PODS:
   - pop (1.0.9)
+  - SCLAlertView (0.5.1)
   - Spring (1.0.3)
 
 DEPENDENCIES:
   - pop (from `https://github.com/facebook/pop.git`)
+  - SCLAlertView
   - Spring (from `https://github.com/MengTo/Spring.git`, branch `swift2`)
 
 EXTERNAL SOURCES:
@@ -23,6 +25,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
+  SCLAlertView: 3ac39a863d3e10fc165662b1228b03402297aea9
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
 
 COCOAPODS: 0.39.0
