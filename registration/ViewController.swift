@@ -16,7 +16,6 @@ import SCLAlertView
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     @IBOutlet weak var titleLabel: UILabel!
-    
     @IBOutlet weak var dateTopConst: NSLayoutConstraint!
     @IBOutlet weak var genderTopConst: NSLayoutConstraint!
     @IBOutlet weak var textfieldCenter: NSLayoutConstraint!
@@ -35,6 +34,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     let alert = SCLAlertView()
     var animEngine : AnimatinEngine!
     var registation = Registration()
+    var isAnimating = true
     
     struct animation
     {
@@ -60,20 +60,20 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     let switchingInterval: NSTimeInterval = 3.0
     
     let images = [
-                    UIImage(named: "IMG13.png")!,
-                    UIImage(named: "IMG14.png")!,
-                    UIImage(named: "IMG15.png")!,
-                    UIImage(named: "IMG16.png")!,
-                    UIImage(named: "IMG17.png")!,
-                    UIImage(named: "IMG18.png")!,
-                    UIImage(named: "IMG19.png")!,
-                    UIImage(named: "IMG20.png")!,
-                    UIImage(named: "IMG21.png")!,
-                    UIImage(named: "IMG22.png")!,
-                    UIImage(named: "IMG23.png")!,
-                    UIImage(named: "IMG24.png")!,
-                ]
-
+        UIImage(named: "IMG13.png")!,
+        UIImage(named: "IMG14.png")!,
+        UIImage(named: "IMG15.png")!,
+        UIImage(named: "IMG16.png")!,
+        UIImage(named: "IMG17.png")!,
+        UIImage(named: "IMG18.png")!,
+        UIImage(named: "IMG19.png")!,
+        UIImage(named: "IMG20.png")!,
+        UIImage(named: "IMG21.png")!,
+        UIImage(named: "IMG22.png")!,
+        UIImage(named: "IMG23.png")!,
+        UIImage(named: "IMG24.png")!,
+        ]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,29 +117,37 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     func animateImageView() {
-        CATransaction.begin()
         
-        CATransaction.setAnimationDuration(animationDuration)
-        CATransaction.setCompletionBlock {
-            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(self.switchingInterval * NSTimeInterval(NSEC_PER_SEC)))
-            dispatch_after(delay, dispatch_get_main_queue()) {
-                self.animateImageView()
+            CATransaction.begin()
+            
+            CATransaction.setAnimationDuration(animationDuration)
+            CATransaction.setCompletionBlock {
+                let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(self.switchingInterval * NSTimeInterval(NSEC_PER_SEC)))
+                dispatch_after(delay, dispatch_get_main_queue()) {
+                    if self.isAnimating == true {
+                        self.animateImageView()
+                    }
+                    
+                }
             }
-        }
+            
+            let transition = CATransition()
+            transition.type = kCATransitionFade
+            /*
+             transition.type = kCATransitionPush
+             transition.subtype = kCATransitionFromRight
+             */
+            backroundImage.layer.addAnimation(transition, forKey: kCATransition)
+            backroundImage.image = images[index]
+            
+            CATransaction.commit()
+            
+            //TODO: WTF
+            index = index < images.count - 1 ? index + 1 : 0
         
-        let transition = CATransition()
-        transition.type = kCATransitionFade
-        /*
-         transition.type = kCATransitionPush
-         transition.subtype = kCATransitionFromRight
-         */
-        backroundImage.layer.addAnimation(transition, forKey: kCATransition)
-        backroundImage.image = images[index]
         
-        CATransaction.commit()
-        
-        index = index < images.count - 1 ? index + 1 : 0
     }
+    
     
     @IBAction func DateOfBirthPicker(sender: UITextField) {
         let datePickerView:UIDatePicker = UIDatePicker()
@@ -199,9 +207,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     func animate(textfields:[DesignableTextField]) {
-        //        self.animEngine = AnimatinEngine(constraints: [textfieldCenter, genderCentarConstraint, dateCenterConstraint])
-        //
-        //        self.animEngine.animateOfSreen(5)
+        
         for textfield in textfields{
             textfield.animation = animation.swipeRight
             textfield.curve = animation.type.spring
@@ -241,7 +247,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         })
         
         alertNew.showCloseButton = true
-        alertNew.showSuccess("Change profile image", subTitle: "Choose image source", closeButtonTitle: "Cancel")
+        alertNew.showSuccess("Change profile image", subTitle: "Choose image source", closeButtonTitle: "Cancel", duration: 20.0, colorStyle: 0x009933, colorTextButton: 0xFFFFFF)
+        
     }
     // if no Camera!!
     func noCamera()
@@ -262,6 +269,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         print("username is: \(registration.Registration.username)")
         print("password is: \(registration.Registration.password)")
         print("confirmPassword is: \(registration.Registration.confirmPassword)")
+        print("Image is: \(registration.Registration.postImage)")
         print("textfield tag is\(textFieldOutlet.tag)")
     }
     
@@ -334,7 +342,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             textFieldOutlet.becomeFirstResponder()
             genderTextFileld.resignFirstResponder()
             titleLabel.text = "Contact details"
-            
+           
+           
         case 4:
             if textFieldOutlet.text == ""
             {
@@ -401,7 +410,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 textFieldOutlet.text = ""
                 titleLabel.text = "Security details"
                 textFieldOutlet.tag = 8
+                
             }
+            
         case 8:
             
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter password", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
@@ -410,7 +421,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             
             textFieldOutlet.text = ""
             textFieldOutlet.tag = 9
-            
+            isAnimating = false
+            backroundImage.image = registration.Registration.postImage
             
         case 9:
             if textFieldOutlet.text == ""
@@ -427,7 +439,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 
                 textFieldOutlet.text = ""
                 textFieldOutlet.tag = 10
-                refresh()
+                
             }
             
         case 10:
@@ -439,7 +451,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             }else{
                 descriptionLabel.hidden = true
                 registration.Registration.confirmPassword = textFieldOutlet.text!
-                
+                refresh()
                 /// sada sve treba poslati na server
             }
         default:
