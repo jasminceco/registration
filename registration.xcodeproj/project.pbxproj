@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE8E82011CA588DB00647557 /* IMG13.png in Resources */ = {isa = PBXBuildFile; fileRef = BE8E81F51CA588DB00647557 /* IMG13.png */; };
+		BE8E82021CA588DB00647557 /* IMG14.png in Resources */ = {isa = PBXBuildFile; fileRef = BE8E81F61CA588DB00647557 /* IMG14.png */; };
+		BE8E82031CA588DB00647557 /* IMG15.png in Resources */ = {isa = PBXBuildFile; fileRef = BE8E81F71CA588DB00647557 /* IMG15.png */; };
+		BE8E82041CA588DB00647557 /* IMG16.png in Resources */ = {isa = PBXBuildFile; fileRef = BE8E81F81CA588DB00647557 /* IMG16.png */; };
+		BE8E82051CA588DB00647557 /* IMG17.png in Resources */ = {isa = PBXBuildFile; fileRef = BE8E81F91CA588DB00647557 /* IMG17.png */; };
+		BE8E82061CA588DB00647557 /* IMG18.png in Resources */ = {isa = PBXBuildFile; fileRef = BE8E81FA1CA588DB00647557 /* IMG18.png */; };
+		BE8E82071CA588DB00647557 /* IMG19.png in Resources */ = {isa = PBXBuildFile; fileRef = BE8E81FB1CA588DB00647557 /* IMG19.png */; };
+		BE8E82081CA588DB00647557 /* IMG20.png in Resources */ = {isa = PBXBuildFile; fileRef = BE8E81FC1CA588DB00647557 /* IMG20.png */; };
+		BE8E82091CA588DB00647557 /* IMG21.png in Resources */ = {isa = PBXBuildFile; fileRef = BE8E81FD1CA588DB00647557 /* IMG21.png */; };
+		BE8E820A1CA588DB00647557 /* IMG22.png in Resources */ = {isa = PBXBuildFile; fileRef = BE8E81FE1CA588DB00647557 /* IMG22.png */; };
+		BE8E820B1CA588DB00647557 /* IMG23.png in Resources */ = {isa = PBXBuildFile; fileRef = BE8E81FF1CA588DB00647557 /* IMG23.png */; };
+		BE8E820C1CA588DB00647557 /* IMG24.png in Resources */ = {isa = PBXBuildFile; fileRef = BE8E82001CA588DB00647557 /* IMG24.png */; };
 		BEB73B171CA2AD80008B29B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB73B161CA2AD80008B29B9 /* AppDelegate.swift */; };
 		BEB73B191CA2AD80008B29B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB73B181CA2AD80008B29B9 /* ViewController.swift */; };
 		BEB73B1C1CA2AD80008B29B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEB73B1A1CA2AD80008B29B9 /* Main.storyboard */; };
@@ -43,6 +55,18 @@
 		1D2CEAC2CB46AF7CB8B1F0D3 /* Pods-registration.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-registration.debug.xcconfig"; path = "Pods/Target Support Files/Pods-registration/Pods-registration.debug.xcconfig"; sourceTree = "<group>"; };
 		5FAF39161F9FEC15FB807C12 /* Pods-registration.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-registration.release.xcconfig"; path = "Pods/Target Support Files/Pods-registration/Pods-registration.release.xcconfig"; sourceTree = "<group>"; };
 		9337E8F16F18574C372E236E /* Pods_registration.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_registration.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE8E81F51CA588DB00647557 /* IMG13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG13.png; sourceTree = "<group>"; };
+		BE8E81F61CA588DB00647557 /* IMG14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG14.png; sourceTree = "<group>"; };
+		BE8E81F71CA588DB00647557 /* IMG15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG15.png; sourceTree = "<group>"; };
+		BE8E81F81CA588DB00647557 /* IMG16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG16.png; sourceTree = "<group>"; };
+		BE8E81F91CA588DB00647557 /* IMG17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG17.png; sourceTree = "<group>"; };
+		BE8E81FA1CA588DB00647557 /* IMG18.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG18.png; sourceTree = "<group>"; };
+		BE8E81FB1CA588DB00647557 /* IMG19.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG19.png; sourceTree = "<group>"; };
+		BE8E81FC1CA588DB00647557 /* IMG20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG20.png; sourceTree = "<group>"; };
+		BE8E81FD1CA588DB00647557 /* IMG21.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG21.png; sourceTree = "<group>"; };
+		BE8E81FE1CA588DB00647557 /* IMG22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG22.png; sourceTree = "<group>"; };
+		BE8E81FF1CA588DB00647557 /* IMG23.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG23.png; sourceTree = "<group>"; };
+		BE8E82001CA588DB00647557 /* IMG24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG24.png; sourceTree = "<group>"; };
 		BEB73B131CA2AD80008B29B9 /* registration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = registration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEB73B161CA2AD80008B29B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEB73B181CA2AD80008B29B9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +131,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BE8726D81CA548F4007DE068 /* pictures */ = {
+			isa = PBXGroup;
+			children = (
+				BE8E81F51CA588DB00647557 /* IMG13.png */,
+				BE8E81F61CA588DB00647557 /* IMG14.png */,
+				BE8E81F71CA588DB00647557 /* IMG15.png */,
+				BE8E81F81CA588DB00647557 /* IMG16.png */,
+				BE8E81F91CA588DB00647557 /* IMG17.png */,
+				BE8E81FA1CA588DB00647557 /* IMG18.png */,
+				BE8E81FB1CA588DB00647557 /* IMG19.png */,
+				BE8E81FC1CA588DB00647557 /* IMG20.png */,
+				BE8E81FD1CA588DB00647557 /* IMG21.png */,
+				BE8E81FE1CA588DB00647557 /* IMG22.png */,
+				BE8E81FF1CA588DB00647557 /* IMG23.png */,
+				BE8E82001CA588DB00647557 /* IMG24.png */,
+			);
+			name = pictures;
+			sourceTree = "<group>";
+		};
 		BEB73B0A1CA2AD80008B29B9 = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +175,7 @@
 		BEB73B151CA2AD80008B29B9 /* registration */ = {
 			isa = PBXGroup;
 			children = (
+				BE8726D81CA548F4007DE068 /* pictures */,
 				BEB73B4A1CA2B177008B29B9 /* custom */,
 				BEB73B491CA2B16D008B29B9 /* Model */,
 				BEB73B161CA2AD80008B29B9 /* AppDelegate.swift */,
@@ -290,10 +334,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE8E82031CA588DB00647557 /* IMG15.png in Resources */,
+				BE8E82091CA588DB00647557 /* IMG21.png in Resources */,
 				BEB73B211CA2AD80008B29B9 /* LaunchScreen.storyboard in Resources */,
+				BE8E820B1CA588DB00647557 /* IMG23.png in Resources */,
+				BE8E820A1CA588DB00647557 /* IMG22.png in Resources */,
+				BE8E82021CA588DB00647557 /* IMG14.png in Resources */,
+				BE8E82071CA588DB00647557 /* IMG19.png in Resources */,
+				BE8E82051CA588DB00647557 /* IMG17.png in Resources */,
 				BEB73B1E1CA2AD80008B29B9 /* Assets.xcassets in Resources */,
+				BE8E82061CA588DB00647557 /* IMG18.png in Resources */,
+				BE8E82011CA588DB00647557 /* IMG13.png in Resources */,
+				BE8E82081CA588DB00647557 /* IMG20.png in Resources */,
+				BE8E82041CA588DB00647557 /* IMG16.png in Resources */,
 				BEB73B1C1CA2AD80008B29B9 /* Main.storyboard in Resources */,
 				BEB73B591CA464E4008B29B9 /* Add User.png in Resources */,
+				BE8E820C1CA588DB00647557 /* IMG24.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,7 +518,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -500,7 +556,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

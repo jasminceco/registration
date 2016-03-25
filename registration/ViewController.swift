@@ -27,9 +27,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var datepickerTextField: DesignableTextField!
     @IBOutlet weak var textFieldOutlet: DesignableTextField!
     
+    @IBOutlet weak var selectImgBtn: UIButton!
     @IBOutlet weak var userImage: UIImageView!
     
-    @IBOutlet weak var backroundImage: UIImageView!
+    @IBOutlet weak var backroundImage: DesignableImageView!
     let selectedImage = UIImagePickerController()
     let alert = SCLAlertView()
     var animEngine : AnimatinEngine!
@@ -53,6 +54,26 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     var backButton = UIBarButtonItem()
     var nextButton = UIBarButtonItem()
     let toolBar = UIToolbar()
+    
+    var index = 0
+    let animationDuration: NSTimeInterval = 0.25
+    let switchingInterval: NSTimeInterval = 3.0
+    
+    let images = [
+                    UIImage(named: "IMG13.png")!,
+                    UIImage(named: "IMG14.png")!,
+                    UIImage(named: "IMG15.png")!,
+                    UIImage(named: "IMG16.png")!,
+                    UIImage(named: "IMG17.png")!,
+                    UIImage(named: "IMG18.png")!,
+                    UIImage(named: "IMG19.png")!,
+                    UIImage(named: "IMG20.png")!,
+                    UIImage(named: "IMG21.png")!,
+                    UIImage(named: "IMG22.png")!,
+                    UIImage(named: "IMG23.png")!,
+                    UIImage(named: "IMG24.png")!,
+                ]
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,10 +99,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         toolBar.sizeToFit()
         
         
-        nextButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Done, target: self, action: "nextBtnPressed:")
+        nextButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Done, target: self, action: #selector(ViewController.nextBtnPressed(_:)))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         
-        backButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Done , target: self, action: "backPressed:")
+        backButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Done , target: self, action: #selector(ViewController.backPressed(_:)))
         
         backButton.enabled = false
         
@@ -95,13 +116,38 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
     }
     
+    func animateImageView() {
+        CATransaction.begin()
+        
+        CATransaction.setAnimationDuration(animationDuration)
+        CATransaction.setCompletionBlock {
+            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(self.switchingInterval * NSTimeInterval(NSEC_PER_SEC)))
+            dispatch_after(delay, dispatch_get_main_queue()) {
+                self.animateImageView()
+            }
+        }
+        
+        let transition = CATransition()
+        transition.type = kCATransitionFade
+        /*
+         transition.type = kCATransitionPush
+         transition.subtype = kCATransitionFromRight
+         */
+        backroundImage.layer.addAnimation(transition, forKey: kCATransition)
+        backroundImage.image = images[index]
+        
+        CATransaction.commit()
+        
+        index = index < images.count - 1 ? index + 1 : 0
+    }
+    
     @IBAction func DateOfBirthPicker(sender: UITextField) {
         let datePickerView:UIDatePicker = UIDatePicker()
         datePickerView.datePickerMode = UIDatePickerMode.Date
         datePickerView.backgroundColor = UIColor.whiteColor()
         datePickerView.alpha = 0.95
         sender.inputView = datePickerView
-        datePickerView.addTarget(self, action: Selector("datePickerValueChanged:"),forControlEvents: UIControlEvents.ValueChanged)
+        datePickerView.addTarget(self, action: #selector(ViewController.datePickerValueChanged(_:)),forControlEvents: UIControlEvents.ValueChanged)
     }
     
     func datePickerValueChanged(sender:UIDatePicker) {
@@ -242,6 +288,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 textFieldOutlet.tag = 1
                 backButton.enabled = true
                 userImage.hidden = true
+                selectImgBtn.hidden = true
                 
             }
         case 1:
@@ -263,6 +310,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 datepickerTextField.hidden = false
                 textFieldOutlet.resignFirstResponder()
                 datepickerTextField.becomeFirstResponder()
+                backroundImage.image = images[index + 1]
+                animateImageView()
             }
             
         case 2:
@@ -410,6 +459,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         animate([textFieldOutlet, datepickerTextField, genderTextFileld])
         
         switch textFieldOutlet.tag {
+            
         case 0:
             backButton.enabled = false
             textFieldOutlet.text = registration.Registration.firsName
@@ -417,6 +467,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             descriptionLabel.hidden = false
             descriptionLabel.text = "Enter First Name"
             titleLabel.text = "Personal details"
+            userImage.hidden = false
+            selectImgBtn.hidden = false
             
         case 1:
             textFieldOutlet.text = registration.Registration.lastName

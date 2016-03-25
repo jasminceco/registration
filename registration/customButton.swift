@@ -31,10 +31,10 @@ class customButton: UIButton {
     }
     func setUpView() {
         self.layer.cornerRadius = corner
-        self.addTarget(self, action: "scaleToSmall", forControlEvents: .TouchDown)
-        self.addTarget(self, action: "scaleToSmall", forControlEvents: .TouchDragEnter)
-        self.addTarget(self, action: "scaleAnimation", forControlEvents: .TouchUpInside)
-        self.addTarget(self, action: "scaleDefault", forControlEvents: .TouchDragExit)
+        self.addTarget(self, action: #selector(customButton.scaleToSmall), forControlEvents: .TouchDown)
+        self.addTarget(self, action: #selector(customButton.scaleToSmall), forControlEvents: .TouchDragEnter)
+        self.addTarget(self, action: #selector(customButton.scaleAnimation), forControlEvents: .TouchUpInside)
+        self.addTarget(self, action: #selector(customButton.scaleDefault), forControlEvents: .TouchDragExit)
     }
     func scaleToSmall() {
         let scaleAnim = POPBasicAnimation(propertyNamed: kPOPLayerScaleXY)
