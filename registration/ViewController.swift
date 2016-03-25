@@ -10,8 +10,7 @@ import UIKit
 import pop
 import Spring
 import SCLAlertView
-
-
+import ALCameraViewController
 
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
@@ -35,7 +34,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     var animEngine : AnimatinEngine!
     var registation = Registration()
     var isAnimating = true
-    
+    var croppingEnabled: Bool = true
+    var libraryEnabled: Bool = true
     struct animation
     {
         static var swipeRight: String = "squeezeRight"
@@ -118,32 +118,32 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     func animateImageView() {
         
-            CATransaction.begin()
-            
-            CATransaction.setAnimationDuration(animationDuration)
-            CATransaction.setCompletionBlock {
-                let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(self.switchingInterval * NSTimeInterval(NSEC_PER_SEC)))
-                dispatch_after(delay, dispatch_get_main_queue()) {
-                    if self.isAnimating == true {
-                        self.animateImageView()
-                    }
-                    
+        CATransaction.begin()
+        
+        CATransaction.setAnimationDuration(animationDuration)
+        CATransaction.setCompletionBlock {
+            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(self.switchingInterval * NSTimeInterval(NSEC_PER_SEC)))
+            dispatch_after(delay, dispatch_get_main_queue()) {
+                if self.isAnimating == true {
+                    self.animateImageView()
                 }
+                
             }
-            
-            let transition = CATransition()
-            transition.type = kCATransitionFade
-            /*
-             transition.type = kCATransitionPush
-             transition.subtype = kCATransitionFromRight
-             */
-            backroundImage.layer.addAnimation(transition, forKey: kCATransition)
-            backroundImage.image = images[index]
-            
-            CATransaction.commit()
-            
-            //TODO: WTF
-            index = index < images.count - 1 ? index + 1 : 0
+        }
+        
+        let transition = CATransition()
+        transition.type = kCATransitionFade
+        /*
+         transition.type = kCATransitionPush
+         transition.subtype = kCATransitionFromRight
+         */
+        backroundImage.layer.addAnimation(transition, forKey: kCATransition)
+        backroundImage.image = images[index]
+        
+        CATransaction.commit()
+        
+        //TODO: WTF
+        index = index < images.count - 1 ? index + 1 : 0
         
         
     }
@@ -226,19 +226,28 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         let alertNew =  SCLAlertView()
         alertNew.addButton("Photo Library", action: { () -> Void in
             print("Photo Library pressed")
-            let sourceType:UIImagePickerControllerSourceType? = UIImagePickerControllerSourceType.PhotoLibrary
-            self.selectedImage.sourceType = sourceType!
-            self.selectedImage.allowsEditing = false
-            self.presentViewController(self.selectedImage, animated: true, completion: nil)
+            let libraryViewController = ALCameraViewController.imagePickerViewController(self.croppingEnabled) { (image) -> Void in
+                self.backroundImage.image = image
+                registration.Registration.postImage = image
+               
+                self.textFieldOutlet.becomeFirstResponder()
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            
+            self.presentViewController(libraryViewController, animated: true, completion: nil)
+            
         })
         
         alertNew.addButton("Camera", action: { () -> Void in
             print("Camera pressed")
             if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil{
-                let sourceType:UIImagePickerControllerSourceType? = UIImagePickerControllerSourceType.Camera
-                self.selectedImage.sourceType = sourceType!
-                self.selectedImage.allowsEditing = false
-                self.presentViewController(self.selectedImage, animated: true, completion: nil)
+                let cameraViewController = ALCameraViewController(croppingEnabled: self.croppingEnabled, allowsLibraryAccess: self.libraryEnabled) { (image) -> Void in
+                    self.backroundImage.image = image
+                    registration.Registration.postImage = image
+                    self.textFieldOutlet.becomeFirstResponder()
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+                self.presentViewController(cameraViewController, animated: true, completion: nil)
             }else{
                 print("No camera")
                 self.noCamera()
@@ -342,8 +351,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             textFieldOutlet.becomeFirstResponder()
             genderTextFileld.resignFirstResponder()
             titleLabel.text = "Contact details"
-           
-           
+            
+            
         case 4:
             if textFieldOutlet.text == ""
             {
@@ -570,6 +579,13 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }
     }
 }
+
+//////***************************************************////
+//                 |                                 |     //
+//                 v  ovo se sada ne koristi_        v     //
+//                                                         //
+//////***************************************************////
+
 extension ViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate
 {
     // postavljanje izabrane slike na Avatar (prezentovanje korisniku i slanje na server)

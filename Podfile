@@ -7,6 +7,7 @@ target 'registration' do
 pod 'pop', :git => 'https://github.com/facebook/pop.git'
 pod 'Spring', :git => 'https://github.com/MengTo/Spring.git', :branch => 'swift2'
 pod 'SCLAlertView'
+pod 'ALCameraViewController'
 end
 
 target 'registrationTests' do

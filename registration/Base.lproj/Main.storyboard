@@ -20,14 +20,16 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0g6-4k-mXA" customClass="DesignableImageView" customModule="Spring">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <visualEffectView clipsSubviews="YES" alpha="0.40000000000000002" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="CA1-nT-bui">
+                            <visualEffectView clipsSubviews="YES" alpha="0.5" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="CA1-nT-bui">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ed1-qA-Lhx">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <blurEffect style="light"/>
+                                <vibrancyEffect>
+                                    <blurEffect style="light"/>
+                                </vibrancyEffect>
                             </visualEffectView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="firsname" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qAx-3t-zrF" customClass="DesignableTextField" customModule="Spring">
                                 <rect key="frame" x="167" y="280" width="266" height="40"/>

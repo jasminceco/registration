@@ -84,11 +84,13 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-registration/ALCameraViewController.framework"
   install_framework "Pods-registration/SCLAlertView.framework"
   install_framework "Pods-registration/Spring.framework"
   install_framework "Pods-registration/pop.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-registration/ALCameraViewController.framework"
   install_framework "Pods-registration/SCLAlertView.framework"
   install_framework "Pods-registration/Spring.framework"
   install_framework "Pods-registration/pop.framework"
