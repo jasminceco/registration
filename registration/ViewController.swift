@@ -298,24 +298,34 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 textField.text = ""
                     break
                 case 1: data.lastName = textField.text!
+                textField.text = ""
                     break
                 case 2: data.dateOfBirth = textField.text!
+                textField.text = ""
                     break
                 case 3: data.gender = textField.text!
+                textField.text = ""
                     break
                 case 4: data.address = textField.text!
+                textField.text = ""
                     break
                 case 5: data.zipCode = textField.text!
+                textField.text = ""
                     break
                 case 6: data.email = textField.text!
+                textField.text = ""
                     break
                 case 7: data.phoneNumber = textField.text!
+                textField.text = ""
                     break
                 case 8: data.username = textField.text!
+                textField.text = ""
                     break
                 case 9: data.password = textField.text!
+                textField.text = ""
                     break
                 case 10: data.confirmPassword = textField.text!
+                textField.text = ""
                     break
                     
                 default:
