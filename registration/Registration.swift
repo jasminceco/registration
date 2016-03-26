@@ -9,17 +9,17 @@
 import UIKit
 
 
-struct Registration {
-        static var firsName: String = ""
-        static var lastName: String = ""
-        static var dateOfBirth: String = ""
-        static var gender : String = ""
-        static var address: String = ""
-        static var zipCode: String = ""
-        static var email: String = ""
-        static var phoneNumber: String = ""
-        static var username: String = ""
-        static var password: String = ""
-        static var confirmPassword: String = ""
-        static var postImage: UIImage!
+class Registration {
+         var firsName: String = ""
+         var lastName: String = ""
+         var dateOfBirth: String = ""
+         var gender : String = ""
+         var address: String = ""
+         var zipCode: String = ""
+         var email: String = ""
+         var phoneNumber: String = ""
+         var username: String = ""
+         var password: String = ""
+         var confirmPassword: String = ""
+         var postImage: UIImage!
 }

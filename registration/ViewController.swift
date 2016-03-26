@@ -228,8 +228,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             print("Photo Library pressed")
             let libraryViewController = ALCameraViewController.imagePickerViewController(self.croppingEnabled) { (image) -> Void in
                 self.backroundImage.image = image
-                registration.Registration.postImage = image
-               
+                registration.Registration().postImage = image
+                
                 self.textFieldOutlet.becomeFirstResponder()
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
@@ -243,7 +243,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil{
                 let cameraViewController = ALCameraViewController(croppingEnabled: self.croppingEnabled, allowsLibraryAccess: self.libraryEnabled) { (image) -> Void in
                     self.backroundImage.image = image
-                    registration.Registration.postImage = image
+                    registration.Registration().postImage = image
                     self.textFieldOutlet.becomeFirstResponder()
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
@@ -267,22 +267,64 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     func refresh(){
-        print("firstname is: \(registration.Registration.firsName)")
-        print("last name is: \(registration.Registration.lastName)")
-        print("date of birth is:\(registration.Registration.dateOfBirth)")
-        print("gender is: \(registration.Registration.gender)")
-        print("address is: \(registration.Registration.address)")
-        print("zipCode is: \(registration.Registration.zipCode)")
-        print("email is: \(registration.Registration.email)")
-        print("phoneNumber is: \(registration.Registration.phoneNumber)")
-        print("username is: \(registration.Registration.username)")
-        print("password is: \(registration.Registration.password)")
-        print("confirmPassword is: \(registration.Registration.confirmPassword)")
-        print("Image is: \(registration.Registration.postImage)")
+        print("firstname is: \(registation.firsName)")
+        print("last name is: \(registation.lastName)")
+        print("date of birth is:\(registation.dateOfBirth)")
+        print("gender is: \(registation.gender)")
+        print("address is: \(registation.address)")
+        print("zipCode is: \(registation.zipCode)")
+        print("email is: \(registation.email)")
+        print("phoneNumber is: \(registation.phoneNumber)")
+        print("username is: \(registation.username)")
+        print("password is: \(registation.password)")
+        print("confirmPassword is: \(registation.confirmPassword)")
+        print("Image is: \(registation.postImage)")
         print("textfield tag is\(textFieldOutlet.tag)")
     }
     
-    
+    func configureCase (data: Registration!, descriptionLabel: UILabel, descriptionLabelhidden: Bool,  atributePlaceholder: String, textField: DesignableTextField, currentCase: Int, tag: Int, backbutton: UIBarButtonItem, backBntHidden: Bool, userImage: UIImageView, userImageHidden: Bool, selectedImg: UIButton, selectedImgHidden : Bool)
+    {
+        descriptionLabel.hidden = descriptionLabelhidden
+        textField.attributedPlaceholder = NSAttributedString(string: atributePlaceholder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+        textField.tag = tag
+        backbutton.enabled = backBntHidden
+        userImage.hidden = userImageHidden
+        selectedImg.hidden = selectedImgHidden
+        
+        let index = tag - 1
+        print(index)
+        
+        switch currentCase{
+        case 0: data.firsName = textField.text!
+        textField.text = ""
+            break
+        case 1: data.lastName = textField.text!
+            break
+        case 2: data.dateOfBirth = textField.text!
+            break
+        case 3: data.gender = textField.text!
+            break
+        case 4: data.address = textField.text!
+            break
+        case 5: data.zipCode = textField.text!
+            break
+        case 6: data.email = textField.text!
+            break
+        case 7: data.phoneNumber = textField.text!
+            break
+        case 8: data.username = textField.text!
+            break
+        case 9: data.password = textField.text!
+            break
+        case 10: data.confirmPassword = textField.text!
+            break
+            
+        default:
+            break
+        }
+        
+        
+    }
     
     @IBAction func nextBtnPressed(sender: customButton) {
         
@@ -297,16 +339,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             }
             else
             {
-                descriptionLabel.hidden = true
-                
-                textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter last name", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-                registration.Registration.firsName = textFieldOutlet.text!
-                textFieldOutlet.text = ""
-                textFieldOutlet.tag = 1
-                backButton.enabled = true
-                userImage.hidden = true
-                selectImgBtn.hidden = true
-                
+                configureCase(registation, descriptionLabel: descriptionLabel, descriptionLabelhidden: true, atributePlaceholder: "enter last name", textField: textFieldOutlet,currentCase: 0, tag: 1, backbutton: backButton, backBntHidden: true, userImage: userImage, userImageHidden: true, selectedImg: selectImgBtn, selectedImgHidden: true)    
             }
         case 1:
             if textFieldOutlet.text == ""
@@ -318,7 +351,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             {
                 descriptionLabel.hidden = true
                 datepickerTextField.attributedPlaceholder = NSAttributedString(string:"enter date of birth", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-                registration.Registration.lastName = textFieldOutlet.text!
+                registation.lastName = textFieldOutlet.text!
                 //  dateTopConst.constant = 280
                 textFieldOutlet.text = ""
                 textFieldOutlet.tag = 2
@@ -333,7 +366,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             
         case 2:
             genderTextFileld.attributedPlaceholder = NSAttributedString(string:"enter gender", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            registration.Registration.dateOfBirth = datepickerTextField.text!
+            registation.dateOfBirth = datepickerTextField.text!
             textFieldOutlet.text = ""
             textFieldOutlet.tag = 3
             datepickerTextField.hidden = true
@@ -343,7 +376,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             genderTextFileld.hidden = false
         case 3:
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter home address", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            registration.Registration.gender = genderTextFileld.text!
+            registation.gender = genderTextFileld.text!
             textFieldOutlet.text = ""
             textFieldOutlet.tag = 4
             textFieldOutlet.hidden = false
@@ -363,7 +396,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             {
                 descriptionLabel.hidden = true
                 textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter zip code", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-                registration.Registration.address = textFieldOutlet.text!
+                registation.address = textFieldOutlet.text!
                 textFieldOutlet.text = ""
                 textFieldOutlet.tag = 5
                 textFieldOutlet.resignFirstResponder()
@@ -373,7 +406,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             
         case 5:
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter email", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            registration.Registration.zipCode = textFieldOutlet.text!
+            registation.zipCode = textFieldOutlet.text!
             textFieldOutlet.text = ""
             textFieldOutlet.resignFirstResponder()
             textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
@@ -393,7 +426,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 
                 descriptionLabel.hidden = true
                 textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter phone Number", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-                registration.Registration.email = textFieldOutlet.text!
+                registation.email = textFieldOutlet.text!
                 textFieldOutlet.text = ""
                 textFieldOutlet.resignFirstResponder()
                 textFieldOutlet.keyboardType = UIKeyboardType.DecimalPad
@@ -412,7 +445,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 descriptionLabel.hidden = true
                 textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter username", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
                 
-                registration.Registration.phoneNumber = textFieldOutlet.text!
+                registation.phoneNumber = textFieldOutlet.text!
                 textFieldOutlet.resignFirstResponder()
                 textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
                 textFieldOutlet.becomeFirstResponder()
@@ -426,12 +459,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter password", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
             
-            registration.Registration.username = textFieldOutlet.text!
+            registation.username = textFieldOutlet.text!
             
             textFieldOutlet.text = ""
             textFieldOutlet.tag = 9
             isAnimating = false
-            backroundImage.image = registration.Registration.postImage
+            backroundImage.image = registation.postImage
             
         case 9:
             if textFieldOutlet.text == ""
@@ -444,7 +477,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 descriptionLabel.hidden = true
                 textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"confirm password", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
                 
-                registration.Registration.password = textFieldOutlet.text!
+                registation.password = textFieldOutlet.text!
                 
                 textFieldOutlet.text = ""
                 textFieldOutlet.tag = 10
@@ -452,14 +485,14 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             }
             
         case 10:
-            if textFieldOutlet.text != registration.Registration.password
+            if textFieldOutlet.text != registation.password
             {
                 descriptionLabel.hidden = false
                 descriptionLabel.text = "password do not macth!"
                 
             }else{
                 descriptionLabel.hidden = true
-                registration.Registration.confirmPassword = textFieldOutlet.text!
+                registation.confirmPassword = textFieldOutlet.text!
                 refresh()
                 /// sada sve treba poslati na server
             }
@@ -483,7 +516,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             
         case 0:
             backButton.enabled = false
-            textFieldOutlet.text = registration.Registration.firsName
+            textFieldOutlet.text = registation.firsName
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             descriptionLabel.hidden = false
             descriptionLabel.text = "Enter First Name"
@@ -492,7 +525,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             selectImgBtn.hidden = false
             
         case 1:
-            textFieldOutlet.text = registration.Registration.lastName
+            textFieldOutlet.text = registation.lastName
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Personal details"
             descriptionLabel.hidden = false
@@ -502,7 +535,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             genderTextFileld.hidden = true
             textFieldOutlet.becomeFirstResponder()
         case 2:
-            datepickerTextField.text = registration.Registration.dateOfBirth
+            datepickerTextField.text = registation.dateOfBirth
             datepickerTextField.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Personal details"
             descriptionLabel.hidden = false
@@ -511,7 +544,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             datepickerTextField.hidden = false
             datepickerTextField.becomeFirstResponder()
         case 3:
-            textFieldOutlet.text = registration.Registration.gender
+            textFieldOutlet.text = registation.gender
             genderTextFileld.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Personal details"
             descriptionLabel.hidden = false
@@ -520,7 +553,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             datepickerTextField.hidden = true
             genderTextFileld.becomeFirstResponder()
         case 4:
-            textFieldOutlet.text = registration.Registration.address
+            textFieldOutlet.text = registation.address
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Contact details"
             descriptionLabel.hidden = false
@@ -529,7 +562,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
             textFieldOutlet.becomeFirstResponder()
         case 5:
-            textFieldOutlet.text = registration.Registration.zipCode
+            textFieldOutlet.text = registation.zipCode
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Contact details"
             descriptionLabel.hidden = false
@@ -538,7 +571,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             textFieldOutlet.keyboardType = UIKeyboardType.DecimalPad
             textFieldOutlet.becomeFirstResponder()
         case 6:
-            textFieldOutlet.text = registration.Registration.email
+            textFieldOutlet.text = registation.email
             titleLabel.text = "Contact details"
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             descriptionLabel.hidden = false
@@ -547,7 +580,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
             textFieldOutlet.becomeFirstResponder()
         case 7:
-            textFieldOutlet.text = registration.Registration.phoneNumber
+            textFieldOutlet.text = registation.phoneNumber
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Contact details"
             descriptionLabel.hidden = false
@@ -556,7 +589,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             textFieldOutlet.keyboardType = UIKeyboardType.DecimalPad
             textFieldOutlet.becomeFirstResponder()
         case 8:
-            textFieldOutlet.text = registration.Registration.username
+            textFieldOutlet.text = registation.username
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Security details"
             descriptionLabel.hidden = false
@@ -565,7 +598,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
             textFieldOutlet.becomeFirstResponder()
         case 9:
-            textFieldOutlet.text = registration.Registration.password
+            textFieldOutlet.text = registation.password
             textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
             titleLabel.text = "Security details"
             descriptionLabel.hidden = false
@@ -602,10 +635,10 @@ extension ViewController: UINavigationControllerDelegate, UIImagePickerControlle
             // for now selectedImage it will be only shown on the screen
             
             // use this one to Resize Image, Store New profile image and Send it to Server
-            registration.Registration.postImage = self.ResizeImage(selectedImage, targetSize: CGSize(width: 200, height: 200))
+            self.registation.postImage = self.ResizeImage(selectedImage, targetSize: CGSize(width: 200, height: 200))
             self.userImage.hidden = true
             
-            self.backroundImage.image = registration.Registration.postImage
+            self.backroundImage.image = self.registation.postImage
             
             self.userImage.layer.cornerRadius = self.userImage.frame.width / 2
             self.userImage.clipsToBounds = true
