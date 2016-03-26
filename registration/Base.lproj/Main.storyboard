@@ -25,6 +25,30 @@
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ed1-qA-Lhx">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="eneter gender" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ACv-cd-vm8" customClass="DesignableTextField" customModule="Spring">
+                                            <rect key="frame" x="167" y="347" width="266" height="40"/>
+                                            <color key="backgroundColor" red="0.16078431372549018" green="0.6588235294117647" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="8Y3-2I-3PE"/>
+                                                <constraint firstAttribute="width" constant="266" id="Rff-vf-RL7"/>
+                                            </constraints>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                    <real key="value" value="8"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                    <color key="value" red="0.92941176469999998" green="0.92941176469999998" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </textField>
+                                    </subviews>
                                 </view>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <vibrancyEffect>
@@ -72,7 +96,7 @@
                                     <action selector="selectPictureFromUserLibaryButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3Bd-Cg-er4"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="datePicker" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lf4-Hv-oL7" customClass="DesignableTextField" customModule="Spring">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="enter dade of birth" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lf4-Hv-oL7" customClass="DesignableTextField" customModule="Spring">
                                 <rect key="frame" x="167" y="411" width="266" height="40"/>
                                 <color key="backgroundColor" red="0.16078431372549018" green="0.6588235294117647" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -96,28 +120,6 @@
                                 <connections>
                                     <action selector="DateOfBirthPicker:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="o9k-Rl-wqZ"/>
                                 </connections>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="gender" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ACv-cd-vm8" customClass="DesignableTextField" customModule="Spring">
-                                <rect key="frame" x="167" y="347" width="266" height="40"/>
-                                <color key="backgroundColor" red="0.16078431372549018" green="0.6588235294117647" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="8Y3-2I-3PE"/>
-                                    <constraint firstAttribute="width" constant="266" id="Rff-vf-RL7"/>
-                                </constraints>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
-                                        <real key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                        <color key="value" red="0.92941176469999998" green="0.92941176469999998" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bTZ-ha-gIf">
                                 <rect key="frame" x="228" y="78" width="144" height="28"/>
@@ -154,10 +156,8 @@
                             <constraint firstAttribute="trailing" secondItem="0g6-4k-mXA" secondAttribute="trailing" id="EwT-oX-FsM"/>
                             <constraint firstItem="jLV-Hh-jd4" firstAttribute="centerX" secondItem="ubD-J6-cR6" secondAttribute="centerX" id="GUK-7B-XI0"/>
                             <constraint firstItem="bTZ-ha-gIf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="J3s-pb-xaQ"/>
-                            <constraint firstItem="ACv-cd-vm8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="L5k-p5-UHj"/>
                             <constraint firstItem="jLV-Hh-jd4" firstAttribute="centerY" secondItem="ubD-J6-cR6" secondAttribute="centerY" id="Ph9-UE-ujy"/>
                             <constraint firstItem="bTZ-ha-gIf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="58" id="PwY-t8-hcc"/>
-                            <constraint firstItem="ACv-cd-vm8" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="R0C-uH-G7e"/>
                             <constraint firstItem="ubD-J6-cR6" firstAttribute="top" secondItem="bTZ-ha-gIf" secondAttribute="bottom" constant="26.5" id="Sp4-Rs-O14"/>
                             <constraint firstItem="CA1-nT-bui" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Tlx-QO-a7H"/>
                             <constraint firstItem="aIY-lH-XLI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="U9n-AW-dGd"/>

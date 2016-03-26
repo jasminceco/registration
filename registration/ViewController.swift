@@ -34,8 +34,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     var animEngine : AnimatinEngine!
     var registation = Registration()
     var isAnimating = true
-    var croppingEnabled: Bool = true
-    var libraryEnabled: Bool = true
+    
+    
     struct animation
     {
         static var swipeRight: String = "squeezeRight"
@@ -77,7 +77,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        registation = Registration()
+       
         textFieldOutlet.becomeFirstResponder()
         descriptionLabel.hidden = true
         textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"first name", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
@@ -226,7 +226,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         let alertNew =  SCLAlertView()
         alertNew.addButton("Photo Library", action: { () -> Void in
             print("Photo Library pressed")
-            let libraryViewController = ALCameraViewController.imagePickerViewController(self.croppingEnabled) { (image) -> Void in
+            let libraryViewController = ALCameraViewController.imagePickerViewController(true) { (image) -> Void in
                 self.backroundImage.image = image
                 registration.Registration().postImage = image
                 
@@ -241,7 +241,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         alertNew.addButton("Camera", action: { () -> Void in
             print("Camera pressed")
             if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil{
-                let cameraViewController = ALCameraViewController(croppingEnabled: self.croppingEnabled, allowsLibraryAccess: self.libraryEnabled) { (image) -> Void in
+                let cameraViewController = ALCameraViewController(croppingEnabled: true, allowsLibraryAccess: true) { (image) -> Void in
                     self.backroundImage.image = image
                     registration.Registration().postImage = image
                     self.textFieldOutlet.becomeFirstResponder()
@@ -282,48 +282,46 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         print("textfield tag is\(textFieldOutlet.tag)")
     }
     
-    func configureCase (data: Registration!, descriptionLabel: UILabel, descriptionLabelhidden: Bool,  atributePlaceholder: String, textField: DesignableTextField, currentCase: Int, tag: Int, backbutton: UIBarButtonItem, backBntHidden: Bool, userImage: UIImageView, userImageHidden: Bool, selectedImg: UIButton, selectedImgHidden : Bool)
+    func configureCase (dataModel data: Registration!, descriptionLabel: UILabel, descriptionLabelhidden: Bool,  atributePlaceholder: String, textField: DesignableTextField, currentCase: Int, NextTag: Int, backbutton: UIBarButtonItem, backBntHidden: Bool, userImage: UIImageView, userImageHidden: Bool, selectedImg: UIButton, selectedImgHidden : Bool)
     {
-        descriptionLabel.hidden = descriptionLabelhidden
-        textField.attributedPlaceholder = NSAttributedString(string: atributePlaceholder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-        textField.tag = tag
-        backbutton.enabled = backBntHidden
-        userImage.hidden = userImageHidden
-        selectedImg.hidden = selectedImgHidden
+      
+                descriptionLabel.hidden = descriptionLabelhidden
+                textField.attributedPlaceholder = NSAttributedString(string: atributePlaceholder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+                textField.tag = NextTag
         
-        let index = tag - 1
-        print(index)
-        
-        switch currentCase{
-        case 0: data.firsName = textField.text!
-        textField.text = ""
-            break
-        case 1: data.lastName = textField.text!
-            break
-        case 2: data.dateOfBirth = textField.text!
-            break
-        case 3: data.gender = textField.text!
-            break
-        case 4: data.address = textField.text!
-            break
-        case 5: data.zipCode = textField.text!
-            break
-        case 6: data.email = textField.text!
-            break
-        case 7: data.phoneNumber = textField.text!
-            break
-        case 8: data.username = textField.text!
-            break
-        case 9: data.password = textField.text!
-            break
-        case 10: data.confirmPassword = textField.text!
-            break
-            
-        default:
-            break
-        }
-        
-        
+                backbutton.enabled = backBntHidden
+                userImage.hidden = userImageHidden
+                selectedImg.hidden = selectedImgHidden
+                
+                switch currentCase{
+                case 0: data.firsName = textField.text!
+                textField.text = ""
+                    break
+                case 1: data.lastName = textField.text!
+                    break
+                case 2: data.dateOfBirth = textField.text!
+                    break
+                case 3: data.gender = textField.text!
+                    break
+                case 4: data.address = textField.text!
+                    break
+                case 5: data.zipCode = textField.text!
+                    break
+                case 6: data.email = textField.text!
+                    break
+                case 7: data.phoneNumber = textField.text!
+                    break
+                case 8: data.username = textField.text!
+                    break
+                case 9: data.password = textField.text!
+                    break
+                case 10: data.confirmPassword = textField.text!
+                    break
+                    
+                default:
+                    break
+                }
+       
     }
     
     @IBAction func nextBtnPressed(sender: customButton) {
@@ -339,7 +337,16 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             }
             else
             {
-                configureCase(registation, descriptionLabel: descriptionLabel, descriptionLabelhidden: true, atributePlaceholder: "enter last name", textField: textFieldOutlet,currentCase: 0, tag: 1, backbutton: backButton, backBntHidden: true, userImage: userImage, userImageHidden: true, selectedImg: selectImgBtn, selectedImgHidden: true)    
+                configureCase(dataModel:registation, descriptionLabel: descriptionLabel, descriptionLabelhidden: true, atributePlaceholder: "enter last name", textField: textFieldOutlet,currentCase: 0, NextTag: 1, backbutton: backButton, backBntHidden: true, userImage: userImage, userImageHidden: true, selectedImg: selectImgBtn, selectedImgHidden: true)
+                
+//                descriptionLabel.hidden = true
+//                datepickerTextField.attributedPlaceholder = NSAttributedString(string:"enter last name", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+//                registation.firsName = textFieldOutlet.text!
+//                textFieldOutlet.text = ""
+//                textFieldOutlet.tag = 1
+//                backButton.enabled = true
+//                userImage.hidden = true
+//                selectImgBtn.hidden = true
             }
         case 1:
             if textFieldOutlet.text == ""
@@ -349,15 +356,16 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             }
             else
             {
-                descriptionLabel.hidden = true
-                datepickerTextField.attributedPlaceholder = NSAttributedString(string:"enter date of birth", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-                registation.lastName = textFieldOutlet.text!
-                //  dateTopConst.constant = 280
-                textFieldOutlet.text = ""
-                textFieldOutlet.tag = 2
-                textFieldOutlet.hidden = true
-                genderTextFileld.hidden = true
-                datepickerTextField.hidden = false
+                configureCase(dataModel: registation, descriptionLabel: descriptionLabel, descriptionLabelhidden: true, atributePlaceholder: "enter date of birth", textField: textFieldOutlet, currentCase: 1, NextTag: 2, backbutton: backButton, backBntHidden: false, userImage: userImage, userImageHidden: true, selectedImg: selectImgBtn, selectedImgHidden: true)
+                
+                //                descriptionLabel.hidden = true
+                //                datepickerTextField.attributedPlaceholder = NSAttributedString(string:"enter date of birth", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+                //                registation.lastName = textFieldOutlet.text!
+                //                textFieldOutlet.text = ""
+                //                textFieldOutlet.tag = 2
+                                textFieldOutlet.hidden = true
+                                genderTextFileld.hidden = true
+                                datepickerTextField.hidden = false
                 textFieldOutlet.resignFirstResponder()
                 datepickerTextField.becomeFirstResponder()
                 backroundImage.image = images[index + 1]
