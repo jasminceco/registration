@@ -25,36 +25,34 @@
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ed1-qA-Lhx">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="eneter gender" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ACv-cd-vm8" customClass="DesignableTextField" customModule="Spring">
-                                            <rect key="frame" x="167" y="347" width="266" height="40"/>
-                                            <color key="backgroundColor" red="0.16078431372549018" green="0.6588235294117647" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="40" id="8Y3-2I-3PE"/>
-                                                <constraint firstAttribute="width" constant="266" id="Rff-vf-RL7"/>
-                                            </constraints>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="5"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
-                                                    <real key="value" value="8"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                                    <color key="value" red="0.92941176469999998" green="0.92941176469999998" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </textField>
-                                    </subviews>
                                 </view>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <vibrancyEffect>
                                     <blurEffect style="light"/>
                                 </vibrancyEffect>
                             </visualEffectView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="eneter gender" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ACv-cd-vm8" customClass="DesignableTextField" customModule="Spring">
+                                <rect key="frame" x="167" y="328" width="266" height="40"/>
+                                <color key="backgroundColor" red="0.16078431372549018" green="0.6588235294117647" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="8Y3-2I-3PE"/>
+                                    <constraint firstAttribute="width" constant="266" id="Rff-vf-RL7"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                        <color key="value" red="0.92941176469999998" green="0.92941176469999998" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="firsname" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qAx-3t-zrF" customClass="DesignableTextField" customModule="Spring">
                                 <rect key="frame" x="167" y="280" width="266" height="40"/>
                                 <color key="backgroundColor" red="0.16078431372549018" green="0.6588235294117647" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -155,6 +153,7 @@
                             <constraint firstItem="qAx-3t-zrF" firstAttribute="top" secondItem="aIY-lH-XLI" secondAttribute="bottom" constant="8" id="6BX-5v-zF0"/>
                             <constraint firstAttribute="trailing" secondItem="0g6-4k-mXA" secondAttribute="trailing" id="EwT-oX-FsM"/>
                             <constraint firstItem="jLV-Hh-jd4" firstAttribute="centerX" secondItem="ubD-J6-cR6" secondAttribute="centerX" id="GUK-7B-XI0"/>
+                            <constraint firstItem="ACv-cd-vm8" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="H36-Oc-YwO"/>
                             <constraint firstItem="bTZ-ha-gIf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="J3s-pb-xaQ"/>
                             <constraint firstItem="jLV-Hh-jd4" firstAttribute="centerY" secondItem="ubD-J6-cR6" secondAttribute="centerY" id="Ph9-UE-ujy"/>
                             <constraint firstItem="bTZ-ha-gIf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="58" id="PwY-t8-hcc"/>
@@ -165,6 +164,7 @@
                             <constraint firstAttribute="trailing" secondItem="CA1-nT-bui" secondAttribute="trailing" id="X1i-fX-GP1"/>
                             <constraint firstItem="0g6-4k-mXA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ZcI-Dg-D5n"/>
                             <constraint firstItem="lf4-Hv-oL7" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="bRS-jE-VmV"/>
+                            <constraint firstItem="ACv-cd-vm8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fCe-vd-Lqi"/>
                             <constraint firstItem="ubD-J6-cR6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gwn-gD-po5"/>
                             <constraint firstItem="KkE-fs-g5z" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="23" id="ir2-jE-crC"/>
                             <constraint firstItem="0g6-4k-mXA" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ndh-7g-q6e"/>

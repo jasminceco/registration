@@ -35,6 +35,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     var registation = Registration()
     var isAnimating = true
     
+    var lastTextField: DesignableTextField!
     
     struct animation
     {
@@ -77,7 +78,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         textFieldOutlet.becomeFirstResponder()
         descriptionLabel.hidden = true
         textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"first name", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
@@ -113,7 +114,177 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         genderTextFileld.inputAccessoryView = toolBar
         datepickerTextField.inputAccessoryView = toolBar
         
+        PrepareForm(self.registation.GetCurrentPage())
         
+    }
+    
+    func PrepareForm(currPage: Registration.CurrentPageData)
+    {
+        // var currPage = self.registation.GetCurrentPage()
+        var enteredData:  String = ""
+        
+        if self.registation.currentPage == 0
+        {
+            backButton.enabled = false
+        }
+        else{
+            backButton.enabled = true
+        }
+        
+        if self.registation.currentPage == self.registation.RegistrationData.count-1
+        {
+            nextButton.title = "Save"
+        }
+        else{
+            nextButton.title = "Next"
+        }
+        
+        if currPage.NotEnteredMandatoryField
+        {
+            descriptionLabel.text = currPage.ErrorMessage
+            descriptionLabel.hidden = false
+        }
+        else
+        {
+            descriptionLabel.hidden = true
+        }
+        
+
+        if self.registation.RegistrationData[self.registation.currentPage] != ""
+        {
+            enteredData = self.registation.RegistrationData[self.registation.currentPage]
+        }
+        
+        if currPage.FieldType == 1 // tect field type
+        {
+        
+            textFieldOutlet.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+            
+            if enteredData != ""
+            {
+                textFieldOutlet.text! = enteredData
+                textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
+                descriptionLabel.text = currPage.PlaceHolder
+                descriptionLabel.hidden = false
+            }
+            
+            setupAppropriateKeyboardAndTextField(textfield: true, keyboard: .Alphabet, gender: false, datepicker: false)
+            
+            print(textFieldOutlet.text)
+        }
+        else if currPage.FieldType == 2 // date field type
+        {
+            datepickerTextField.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+            
+            // datepickerTextField.text = enteredData
+            
+            setupAppropriateKeyboardAndTextField(textfield: false, keyboard: .Default, gender: false, datepicker: true)
+        }
+        else if currPage.FieldType == 3 // gender field type
+        {
+            genderTextFileld.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+            
+            // datepickerTextField.text = enteredData
+            
+            setupAppropriateKeyboardAndTextField(textfield: false,  keyboard: .Default, gender: true, datepicker: false)
+        }
+        else if currPage.FieldType == 4 // zipcode field type
+        {
+            textFieldOutlet.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+            
+            
+            // datepickerTextField.text = enteredData
+            
+            setupAppropriateKeyboardAndTextField(textfield: true,  keyboard: .DecimalPad, gender: false, datepicker: false)
+
+        }
+        else if currPage.FieldType == 5 // email
+        {
+            textFieldOutlet.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+            
+            
+            // datepickerTextField.text = enteredData
+            
+            setupAppropriateKeyboardAndTextField(textfield: true,  keyboard: .EmailAddress, gender: false, datepicker: false)
+            
+        }
+        else if currPage.FieldType == 6 // phone number
+        {
+            textFieldOutlet.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+            
+            
+            // datepickerTextField.text = enteredData
+            
+            setupAppropriateKeyboardAndTextField(textfield: true,  keyboard: .DecimalPad, gender: false, datepicker: false)
+            
+        }
+        else if currPage.FieldType == 7 // password
+        {
+            textFieldOutlet.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+            
+            
+            // datepickerTextField.text = enteredData
+            
+            setupAppropriateKeyboardAndTextField(textfield: true,  keyboard: .Alphabet, gender: false, datepicker: false)
+            
+        }
+        else if currPage.FieldType == 8 // confirm password
+        {
+            textFieldOutlet.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+            
+            
+            // datepickerTextField.text = enteredData
+            
+            setupAppropriateKeyboardAndTextField(textfield: true,  keyboard: .Alphabet, gender: false, datepicker: false)
+            
+        }
+        
+        // Postavi group name
+        titleLabel.text = currPage.PageGroupName
+        
+    }
+    
+    func setupAppropriateKeyboardAndTextField(textfield textfield: Bool, keyboard: UIKeyboardType, gender: Bool, datepicker: Bool)
+    {
+        textFieldOutlet.hidden = !textfield
+        genderTextFileld.hidden = !gender
+        datepickerTextField.hidden = !datepicker
+        
+        if textfield
+        {
+            textFieldOutlet.resignFirstResponder()
+
+            textFieldOutlet.keyboardType = keyboard
+            
+            textFieldOutlet.becomeFirstResponder()
+            lastTextField = textFieldOutlet
+        }
+        else
+        {
+            textFieldOutlet.resignFirstResponder()
+        }
+        
+        if gender
+        {
+            genderTextFileld.becomeFirstResponder()
+            lastTextField = genderTextFileld
+        }
+        else
+        {
+            genderTextFileld.resignFirstResponder()
+        }
+        
+        if datepicker
+        {
+            datepickerTextField.becomeFirstResponder()
+            lastTextField = datepickerTextField
+        }
+        else
+        {
+            datepickerTextField.resignFirstResponder()
+        }
+
+        animate([lastTextField])
     }
     
     func animateImageView() {
@@ -284,350 +455,70 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     func configureCase (dataModel data: Registration!, descriptionLabel: UILabel, descriptionLabelhidden: Bool,  atributePlaceholder: String, textField: DesignableTextField, currentCase: Int, NextTag: Int, backbutton: UIBarButtonItem, backBntHidden: Bool, userImage: UIImageView, userImageHidden: Bool, selectedImg: UIButton, selectedImgHidden : Bool)
     {
-      
-                descriptionLabel.hidden = descriptionLabelhidden
-                textField.attributedPlaceholder = NSAttributedString(string: atributePlaceholder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-                textField.tag = NextTag
         
-                backbutton.enabled = backBntHidden
-                userImage.hidden = userImageHidden
-                selectedImg.hidden = selectedImgHidden
-                
-                switch currentCase{
-                case 0: data.firsName = textField.text!
-                textField.text = ""
-                    break
-                case 1: data.lastName = textField.text!
-                textField.text = ""
-                    break
-                case 2: data.dateOfBirth = textField.text!
-                textField.text = ""
-                    break
-                case 3: data.gender = textField.text!
-                textField.text = ""
-                    break
-                case 4: data.address = textField.text!
-                textField.text = ""
-                    break
-                case 5: data.zipCode = textField.text!
-                textField.text = ""
-                    break
-                case 6: data.email = textField.text!
-                textField.text = ""
-                    break
-                case 7: data.phoneNumber = textField.text!
-                textField.text = ""
-                    break
-                case 8: data.username = textField.text!
-                textField.text = ""
-                    break
-                case 9: data.password = textField.text!
-                textField.text = ""
-                    break
-                case 10: data.confirmPassword = textField.text!
-                textField.text = ""
-                    break
-                    
-                default:
-                    break
-                }
-       
-    }
-    
-    @IBAction func nextBtnPressed(sender: customButton) {
+        descriptionLabel.hidden = descriptionLabelhidden
+        textField.attributedPlaceholder = NSAttributedString(string: atributePlaceholder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+        textField.tag = NextTag
         
-        animate([textFieldOutlet, datepickerTextField, genderTextFileld])
+        backbutton.enabled = backBntHidden
+        userImage.hidden = userImageHidden
+        selectedImg.hidden = selectedImgHidden
         
-        switch textFieldOutlet.tag {
-        case 0:
-            if textFieldOutlet.text == ""
-            {
-                descriptionLabel.hidden = false
-                descriptionLabel.text = "First Name is mandatory!"
-            }
-            else
-            {
-                configureCase(dataModel:registation, descriptionLabel: descriptionLabel, descriptionLabelhidden: true, atributePlaceholder: "enter last name", textField: textFieldOutlet,currentCase: 0, NextTag: 1, backbutton: backButton, backBntHidden: true, userImage: userImage, userImageHidden: true, selectedImg: selectImgBtn, selectedImgHidden: true)
-                
-//                descriptionLabel.hidden = true
-//                datepickerTextField.attributedPlaceholder = NSAttributedString(string:"enter last name", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-//                registation.firsName = textFieldOutlet.text!
-//                textFieldOutlet.text = ""
-//                textFieldOutlet.tag = 1
-//                backButton.enabled = true
-//                userImage.hidden = true
-//                selectImgBtn.hidden = true
-            }
-        case 1:
-            if textFieldOutlet.text == ""
-            {
-                descriptionLabel.hidden = false
-                descriptionLabel.text = "Last Name is mandatory!"
-            }
-            else
-            {
-                configureCase(dataModel: registation, descriptionLabel: descriptionLabel, descriptionLabelhidden: true, atributePlaceholder: "enter date of birth", textField: textFieldOutlet, currentCase: 1, NextTag: 2, backbutton: backButton, backBntHidden: false, userImage: userImage, userImageHidden: true, selectedImg: selectImgBtn, selectedImgHidden: true)
-                
-                //                descriptionLabel.hidden = true
-                //                datepickerTextField.attributedPlaceholder = NSAttributedString(string:"enter date of birth", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-                //                registation.lastName = textFieldOutlet.text!
-                //                textFieldOutlet.text = ""
-                //                textFieldOutlet.tag = 2
-                                textFieldOutlet.hidden = true
-                                genderTextFileld.hidden = true
-                                datepickerTextField.hidden = false
-                textFieldOutlet.resignFirstResponder()
-                datepickerTextField.becomeFirstResponder()
-                backroundImage.image = images[index + 1]
-                animateImageView()
-            }
-            
-        case 2:
-            genderTextFileld.attributedPlaceholder = NSAttributedString(string:"enter gender", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            registation.dateOfBirth = datepickerTextField.text!
-            textFieldOutlet.text = ""
-            textFieldOutlet.tag = 3
-            datepickerTextField.hidden = true
-            datepickerTextField.resignFirstResponder()
-            genderTextFileld.becomeFirstResponder()
-            // genderTopConst.constant = 280
-            genderTextFileld.hidden = false
-        case 3:
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter home address", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            registation.gender = genderTextFileld.text!
-            textFieldOutlet.text = ""
-            textFieldOutlet.tag = 4
-            textFieldOutlet.hidden = false
-            genderTextFileld.hidden = true
-            textFieldOutlet.becomeFirstResponder()
-            genderTextFileld.resignFirstResponder()
-            titleLabel.text = "Contact details"
-            
-            
-        case 4:
-            if textFieldOutlet.text == ""
-            {
-                descriptionLabel.hidden = false
-                descriptionLabel.text = "Home address is mandatory!"
-            }
-            else
-            {
-                descriptionLabel.hidden = true
-                textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter zip code", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-                registation.address = textFieldOutlet.text!
-                textFieldOutlet.text = ""
-                textFieldOutlet.tag = 5
-                textFieldOutlet.resignFirstResponder()
-                textFieldOutlet.keyboardType = UIKeyboardType.DecimalPad
-                textFieldOutlet.becomeFirstResponder()
-            }
-            
-        case 5:
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter email", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            registation.zipCode = textFieldOutlet.text!
-            textFieldOutlet.text = ""
-            textFieldOutlet.resignFirstResponder()
-            textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
-            textFieldOutlet.becomeFirstResponder()
-            textFieldOutlet.tag = 6
-            
-            
-        case 6:
-            if !isValidEmail(textFieldOutlet.text!)
-            {
-                
-                descriptionLabel.hidden = false
-                descriptionLabel.text = "Not valid email address!"
-            }
-            else
-            {
-                
-                descriptionLabel.hidden = true
-                textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter phone Number", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-                registation.email = textFieldOutlet.text!
-                textFieldOutlet.text = ""
-                textFieldOutlet.resignFirstResponder()
-                textFieldOutlet.keyboardType = UIKeyboardType.DecimalPad
-                textFieldOutlet.becomeFirstResponder()
-                
-                textFieldOutlet.tag = 7
-            }
-        case 7:
-            if textFieldOutlet.text == ""
-            {
-                descriptionLabel.hidden = false
-                descriptionLabel.text = "Phone number is mandatory!"
-            }
-            else
-            {
-                descriptionLabel.hidden = true
-                textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter username", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-                
-                registation.phoneNumber = textFieldOutlet.text!
-                textFieldOutlet.resignFirstResponder()
-                textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
-                textFieldOutlet.becomeFirstResponder()
-                textFieldOutlet.text = ""
-                titleLabel.text = "Security details"
-                textFieldOutlet.tag = 8
-                
-            }
-            
-        case 8:
-            
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"enter password", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            
-            registation.username = textFieldOutlet.text!
-            
-            textFieldOutlet.text = ""
-            textFieldOutlet.tag = 9
-            isAnimating = false
-            backroundImage.image = registation.postImage
-            
-        case 9:
-            if textFieldOutlet.text == ""
-            {
-                descriptionLabel.hidden = false
-                descriptionLabel.text = "Password is mandatory!"
-            }
-            else
-            {
-                descriptionLabel.hidden = true
-                textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"confirm password", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-                
-                registation.password = textFieldOutlet.text!
-                
-                textFieldOutlet.text = ""
-                textFieldOutlet.tag = 10
-                
-            }
-            
-        case 10:
-            if textFieldOutlet.text != registation.password
-            {
-                descriptionLabel.hidden = false
-                descriptionLabel.text = "password do not macth!"
-                
-            }else{
-                descriptionLabel.hidden = true
-                registation.confirmPassword = textFieldOutlet.text!
-                refresh()
-                /// sada sve treba poslati na server
-            }
-        default:
+        switch currentCase{
+        case 0: data.firsName = textField.text!
+        textField.text = ""
+            break
+        case 1: data.lastName = textField.text!
+        textField.text = ""
+            break
+        case 2: data.dateOfBirth = textField.text!
+        textField.text = ""
+            break
+        case 3: data.gender = textField.text!
+        textField.text = ""
+            break
+        case 4: data.address = textField.text!
+        textField.text = ""
+            break
+        case 5: data.zipCode = textField.text!
+        textField.text = ""
+            break
+        case 6: data.email = textField.text!
+        textField.text = ""
+            break
+        case 7: data.phoneNumber = textField.text!
+        textField.text = ""
+            break
+        case 8: data.username = textField.text!
+        textField.text = ""
+            break
+        case 9: data.password = textField.text!
+        textField.text = ""
+            break
+        case 10: data.confirmPassword = textField.text!
+        textField.text = ""
             break
             
+        default:
+            break
         }
         
+    }
+    
+    @IBAction func nextBtnPressed(sender: customButton)
+    {
+        self.PrepareForm(self.registation.NextPage(lastTextField.text!))
+        
+        lastTextField.text = ""
+        
+       
     }
     
     
     @IBAction func backPressed(sender: customButton) {
         
-        if textFieldOutlet.tag >= 0 {
-            textFieldOutlet.tag = textFieldOutlet.tag - 1
-        }
-        
-        animate([textFieldOutlet, datepickerTextField, genderTextFileld])
-        
-        switch textFieldOutlet.tag {
-            
-        case 0:
-            backButton.enabled = false
-            textFieldOutlet.text = registation.firsName
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
-            descriptionLabel.hidden = false
-            descriptionLabel.text = "Enter First Name"
-            titleLabel.text = "Personal details"
-            userImage.hidden = false
-            selectImgBtn.hidden = false
-            
-        case 1:
-            textFieldOutlet.text = registation.lastName
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
-            titleLabel.text = "Personal details"
-            descriptionLabel.hidden = false
-            descriptionLabel.text = "Enter Last Name"
-            textFieldOutlet.hidden = false
-            datepickerTextField.hidden = true
-            genderTextFileld.hidden = true
-            textFieldOutlet.becomeFirstResponder()
-        case 2:
-            datepickerTextField.text = registation.dateOfBirth
-            datepickerTextField.attributedPlaceholder = NSAttributedString(string:"")
-            titleLabel.text = "Personal details"
-            descriptionLabel.hidden = false
-            descriptionLabel.text = "Enter Date of Birth"
-            textFieldOutlet.hidden = true
-            datepickerTextField.hidden = false
-            datepickerTextField.becomeFirstResponder()
-        case 3:
-            textFieldOutlet.text = registation.gender
-            genderTextFileld.attributedPlaceholder = NSAttributedString(string:"")
-            titleLabel.text = "Personal details"
-            descriptionLabel.hidden = false
-            descriptionLabel.text = "Enter Gender"
-            textFieldOutlet.hidden = false
-            datepickerTextField.hidden = true
-            genderTextFileld.becomeFirstResponder()
-        case 4:
-            textFieldOutlet.text = registation.address
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
-            titleLabel.text = "Contact details"
-            descriptionLabel.hidden = false
-            descriptionLabel.text = "Enter Home Address"
-            textFieldOutlet.resignFirstResponder()
-            textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
-            textFieldOutlet.becomeFirstResponder()
-        case 5:
-            textFieldOutlet.text = registation.zipCode
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
-            titleLabel.text = "Contact details"
-            descriptionLabel.hidden = false
-            descriptionLabel.text = "Enter Zip Code"
-            textFieldOutlet.resignFirstResponder()
-            textFieldOutlet.keyboardType = UIKeyboardType.DecimalPad
-            textFieldOutlet.becomeFirstResponder()
-        case 6:
-            textFieldOutlet.text = registation.email
-            titleLabel.text = "Contact details"
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
-            descriptionLabel.hidden = false
-            descriptionLabel.text = "Enter email"
-            textFieldOutlet.resignFirstResponder()
-            textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
-            textFieldOutlet.becomeFirstResponder()
-        case 7:
-            textFieldOutlet.text = registation.phoneNumber
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
-            titleLabel.text = "Contact details"
-            descriptionLabel.hidden = false
-            descriptionLabel.text = "Enter Phone Number"
-            textFieldOutlet.resignFirstResponder()
-            textFieldOutlet.keyboardType = UIKeyboardType.DecimalPad
-            textFieldOutlet.becomeFirstResponder()
-        case 8:
-            textFieldOutlet.text = registation.username
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
-            titleLabel.text = "Security details"
-            descriptionLabel.hidden = false
-            descriptionLabel.text = "Enter username"
-            textFieldOutlet.resignFirstResponder()
-            textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
-            textFieldOutlet.becomeFirstResponder()
-        case 9:
-            textFieldOutlet.text = registation.password
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
-            titleLabel.text = "Security details"
-            descriptionLabel.hidden = false
-            descriptionLabel.text = "Enter password"
-            textFieldOutlet.resignFirstResponder()
-            textFieldOutlet.keyboardType = UIKeyboardType.Alphabet
-            textFieldOutlet.becomeFirstResponder()
-        default:
-            break
-            
-        }
+        self.PrepareForm(self.registation.PreviousPage())
+      
     }
 }
 
@@ -674,6 +565,7 @@ extension ViewController: UINavigationControllerDelegate, UIImagePickerControlle
         alertNew.showSuccess("New image selected!", subTitle: "Do you wont to save it?", closeButtonTitle: "Choose different image")
         
     }
+    
     
     func ResizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size
