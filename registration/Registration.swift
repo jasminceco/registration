@@ -10,6 +10,7 @@ import UIKit
 
 
 class Registration {
+    
     static let TextFieldType = 1
     static let DateFieldType = 2
     static let GenderFieldType = 3

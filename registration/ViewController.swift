@@ -7,20 +7,16 @@
 //
 
 import UIKit
-import pop
 import Spring
 import SCLAlertView
 import ALCameraViewController
 
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+    
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var dateTopConst: NSLayoutConstraint!
-    @IBOutlet weak var genderTopConst: NSLayoutConstraint!
-    @IBOutlet weak var textfieldCenter: NSLayoutConstraint!
-    @IBOutlet weak var genderCentarConstraint: NSLayoutConstraint!
-    @IBOutlet weak var dateCenterConstraint: NSLayoutConstraint!
     @IBOutlet weak var descriptionLabel: UILabel!
+    
     @IBOutlet weak var genderTextFileld: DesignableTextField!
     @IBOutlet weak var datepickerTextField: DesignableTextField!
     @IBOutlet weak var textFieldOutlet: DesignableTextField!
@@ -29,11 +25,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var userImage: UIImageView!
     
     @IBOutlet weak var backroundImage: DesignableImageView!
-    let selectedImage = UIImagePickerController()
+    
     let alert = SCLAlertView()
-    var animEngine : AnimatinEngine!
     var registation = Registration()
-    var isAnimating = true
     
     var lastTextField: DesignableTextField!
     
@@ -56,49 +50,24 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     var nextButton = UIBarButtonItem()
     let toolBar = UIToolbar()
     
-    var index = 0
-    let animationDuration: NSTimeInterval = 0.25
-    let switchingInterval: NSTimeInterval = 3.0
-    
-    let images = [
-        UIImage(named: "IMG13.png")!,
-        UIImage(named: "IMG14.png")!,
-        UIImage(named: "IMG15.png")!,
-        UIImage(named: "IMG16.png")!,
-        UIImage(named: "IMG17.png")!,
-        UIImage(named: "IMG18.png")!,
-        UIImage(named: "IMG19.png")!,
-        UIImage(named: "IMG20.png")!,
-        UIImage(named: "IMG21.png")!,
-        UIImage(named: "IMG22.png")!,
-        UIImage(named: "IMG23.png")!,
-        UIImage(named: "IMG24.png")!,
-        ]
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        textFieldOutlet.becomeFirstResponder()
-        descriptionLabel.hidden = true
-        textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"first name", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+        lastTextField = textFieldOutlet
+        
         // SETING PICKER FOR GENDER TEXT FIELD //
         pickerView.backgroundColor = UIColor.whiteColor()
         pickerView.alpha = 0.95
         pickerView.delegate = self
         genderTextFileld.inputView = pickerView
         
-        genderTextFileld.hidden = true
-        datepickerTextField.hidden = true
-        
-        
+        // SETING TOOLBAR FOR ACTIVE TEXT FIELDs //
         toolBar.barStyle = UIBarStyle.Black
         toolBar.translucent = true
         toolBar.alpha = 0.95
         toolBar.tintColor = UIColor.whiteColor()
         
         toolBar.sizeToFit()
-        
         
         nextButton = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Done, target: self, action: #selector(ViewController.nextBtnPressed(_:)))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
@@ -107,7 +76,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         backButton.enabled = false
         
-        toolBar.setItems([backButton, spaceButton, nextButton], animated: false)
+        toolBar.setItems([backButton, spaceButton, nextButton], animated: true)
         toolBar.userInteractionEnabled = true
         toolBar.backgroundColor = UIColor.darkGrayColor()
         textFieldOutlet.inputAccessoryView = toolBar
@@ -122,18 +91,29 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     {
         // var currPage = self.registation.GetCurrentPage()
         var enteredData:  String = ""
+        let confirmPassField: Int = 10
+        
         
         if self.registation.currentPage == 0
         {
             backButton.enabled = false
+            selectImgBtn.hidden = false
+            userImage.hidden = false
         }
         else{
             backButton.enabled = true
         }
         
+        if self.registation.currentPage == 1
+        {
+            selectImgBtn.hidden = true
+            userImage.hidden = true
+        }
+        
         if self.registation.currentPage == self.registation.RegistrationData.count-1
         {
             nextButton.title = "Save"
+            
         }
         else{
             nextButton.title = "Next"
@@ -143,99 +123,91 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         {
             descriptionLabel.text = currPage.ErrorMessage
             descriptionLabel.hidden = false
+            lastTextField.borderColor = UIColor.redColor()
+            lastTextField.borderWidth = 1.0
         }
         else
         {
             descriptionLabel.hidden = true
+            lastTextField.borderColor = UIColor.clearColor()
+            lastTextField.borderWidth = 0.0
         }
         
-
+        
         if self.registation.RegistrationData[self.registation.currentPage] != ""
         {
             enteredData = self.registation.RegistrationData[self.registation.currentPage]
+            
+            if self.registation.currentPage == confirmPassField {
+                if self.registation.RegistrationData[confirmPassField] !=  self.registation.RegistrationData[confirmPassField - 1]{
+                    descriptionLabel.text = currPage.ErrorMessage
+                    descriptionLabel.hidden = false
+                    lastTextField.borderColor = UIColor.redColor()
+                    lastTextField.borderWidth = 1.0
+                    
+                }
+            }
         }
         
         if currPage.FieldType == 1 // tect field type
         {
-        
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            
             if enteredData != ""
             {
-                textFieldOutlet.text! = enteredData
-                textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
-                descriptionLabel.text = currPage.PlaceHolder
-                descriptionLabel.hidden = false
+                ifEnterdDataExist(Data: enteredData, titleMsg: currPage.PlaceHolder)
             }
             
-            setupAppropriateKeyboardAndTextField(textfield: true, keyboard: .Alphabet, gender: false, datepicker: false)
+            setupAppropriateKeyboardAndTextField(textfield: true, gender: false, datepicker: false, placeHoleder: currPage.PlaceHolder, keyboard: .Alphabet, secure: false)
             
-            print(textFieldOutlet.text)
         }
         else if currPage.FieldType == 2 // date field type
         {
-            datepickerTextField.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            
-            // datepickerTextField.text = enteredData
-            
-            setupAppropriateKeyboardAndTextField(textfield: false, keyboard: .Default, gender: false, datepicker: true)
+            setupAppropriateKeyboardAndTextField(textfield: false, gender: false, datepicker: true, placeHoleder: currPage.PlaceHolder, keyboard: .Default, secure: false)
         }
         else if currPage.FieldType == 3 // gender field type
         {
-            genderTextFileld.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            
-            // datepickerTextField.text = enteredData
-            
-            setupAppropriateKeyboardAndTextField(textfield: false,  keyboard: .Default, gender: true, datepicker: false)
+            setupAppropriateKeyboardAndTextField(textfield: false, gender: true, datepicker: false, placeHoleder: currPage.PlaceHolder,  keyboard: .Default, secure: false)
         }
         else if currPage.FieldType == 4 // zipcode field type
         {
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+            if enteredData != ""
+            {
+                ifEnterdDataExist(Data: enteredData, titleMsg: currPage.PlaceHolder)
+            }
+            setupAppropriateKeyboardAndTextField(textfield: true, gender: false, datepicker: false, placeHoleder: currPage.PlaceHolder, keyboard: .NumberPad , secure: false)
             
-            
-            // datepickerTextField.text = enteredData
-            
-            setupAppropriateKeyboardAndTextField(textfield: true,  keyboard: .DecimalPad, gender: false, datepicker: false)
-
         }
         else if currPage.FieldType == 5 // email
         {
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            
-            
-            // datepickerTextField.text = enteredData
-            
-            setupAppropriateKeyboardAndTextField(textfield: true,  keyboard: .EmailAddress, gender: false, datepicker: false)
+            if enteredData != ""
+            {
+                ifEnterdDataExist(Data: enteredData, titleMsg: currPage.PlaceHolder)
+            }
+            setupAppropriateKeyboardAndTextField(textfield: true, gender: false, datepicker: false, placeHoleder: currPage.PlaceHolder,  keyboard: .EmailAddress, secure: false)
             
         }
         else if currPage.FieldType == 6 // phone number
         {
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
             
-            
-            // datepickerTextField.text = enteredData
-            
-            setupAppropriateKeyboardAndTextField(textfield: true,  keyboard: .DecimalPad, gender: false, datepicker: false)
+            if enteredData != ""
+            {
+                ifEnterdDataExist(Data: enteredData, titleMsg: currPage.PlaceHolder)
+            }
+            setupAppropriateKeyboardAndTextField(textfield: true, gender: false, datepicker: false, placeHoleder: currPage.PlaceHolder,  keyboard: .PhonePad, secure: false)
             
         }
         else if currPage.FieldType == 7 // password
         {
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-            
-            
-            // datepickerTextField.text = enteredData
-            
-            setupAppropriateKeyboardAndTextField(textfield: true,  keyboard: .Alphabet, gender: false, datepicker: false)
+            if enteredData != ""
+            {
+                ifEnterdDataExist(Data: enteredData, titleMsg: currPage.PlaceHolder)
+            }
+            setupAppropriateKeyboardAndTextField(textfield: true, gender: false, datepicker: false, placeHoleder: currPage.PlaceHolder,  keyboard: .Alphabet, secure: true)
             
         }
         else if currPage.FieldType == 8 // confirm password
         {
-            textFieldOutlet.attributedPlaceholder = NSAttributedString(string: currPage.PlaceHolder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
             
-            
-            // datepickerTextField.text = enteredData
-            
-            setupAppropriateKeyboardAndTextField(textfield: true,  keyboard: .Alphabet, gender: false, datepicker: false)
+            setupAppropriateKeyboardAndTextField(textfield: true, gender: false, datepicker: false, placeHoleder: currPage.PlaceHolder,  keyboard: .Alphabet, secure: true )
             
         }
         
@@ -244,18 +216,24 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
     }
     
-    func setupAppropriateKeyboardAndTextField(textfield textfield: Bool, keyboard: UIKeyboardType, gender: Bool, datepicker: Bool)
+    func ifEnterdDataExist(Data enteredData: String, titleMsg: String){
+        lastTextField.text! = enteredData
+        textFieldOutlet.attributedPlaceholder = NSAttributedString(string:"")
+        descriptionLabel.text = titleMsg
+        descriptionLabel.hidden = false
+    }
+    
+    func setupAppropriateKeyboardAndTextField(textfield textfield: Bool,gender: Bool, datepicker: Bool, placeHoleder: String, keyboard: UIKeyboardType, secure: Bool)
     {
         textFieldOutlet.hidden = !textfield
         genderTextFileld.hidden = !gender
         datepickerTextField.hidden = !datepicker
+        lastTextField.secureTextEntry = secure
         
         if textfield
         {
             textFieldOutlet.resignFirstResponder()
-
             textFieldOutlet.keyboardType = keyboard
-            
             textFieldOutlet.becomeFirstResponder()
             lastTextField = textFieldOutlet
         }
@@ -266,8 +244,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         if gender
         {
-            genderTextFileld.becomeFirstResponder()
             lastTextField = genderTextFileld
+            genderTextFileld.becomeFirstResponder()
         }
         else
         {
@@ -276,49 +254,18 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         if datepicker
         {
-            datepickerTextField.becomeFirstResponder()
             lastTextField = datepickerTextField
+            datepickerTextField.becomeFirstResponder()
         }
         else
         {
             datepickerTextField.resignFirstResponder()
         }
-
+        
+        lastTextField.attributedPlaceholder = NSAttributedString(string: placeHoleder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
+        
         animate([lastTextField])
     }
-    
-    func animateImageView() {
-        
-        CATransaction.begin()
-        
-        CATransaction.setAnimationDuration(animationDuration)
-        CATransaction.setCompletionBlock {
-            let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(self.switchingInterval * NSTimeInterval(NSEC_PER_SEC)))
-            dispatch_after(delay, dispatch_get_main_queue()) {
-                if self.isAnimating == true {
-                    self.animateImageView()
-                }
-                
-            }
-        }
-        
-        let transition = CATransition()
-        transition.type = kCATransitionFade
-        /*
-         transition.type = kCATransitionPush
-         transition.subtype = kCATransitionFromRight
-         */
-        backroundImage.layer.addAnimation(transition, forKey: kCATransition)
-        backroundImage.image = images[index]
-        
-        CATransaction.commit()
-        
-        //TODO: WTF
-        index = index < images.count - 1 ? index + 1 : 0
-        
-        
-    }
-    
     
     @IBAction func DateOfBirthPicker(sender: UITextField) {
         let datePickerView:UIDatePicker = UIDatePicker()
@@ -382,17 +329,17 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         for textfield in textfields{
             textfield.animation = animation.swipeRight
             textfield.curve = animation.type.spring
-            textfield.force = 2.9
-            textfield.duration = 1
+            textfield.force = 1.9
+            textfield.duration = 0.5
             textfield.delay = 0.1
             textfield.damping = 0.7
             textfield.velocity = 0.5
             textfield.animate()
         }
     }
+    
     @IBAction func selectPictureFromUserLibaryButton(sender: AnyObject) {
         textFieldOutlet.resignFirstResponder()
-        selectedImage.delegate = self
         
         let alertNew =  SCLAlertView()
         alertNew.addButton("Photo Library", action: { () -> Void in
@@ -401,7 +348,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 self.backroundImage.image = image
                 registration.Registration().postImage = image
                 
-                self.textFieldOutlet.becomeFirstResponder()
+                self.lastTextField.becomeFirstResponder()
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
             
@@ -415,7 +362,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 let cameraViewController = ALCameraViewController(croppingEnabled: true, allowsLibraryAccess: true) { (image) -> Void in
                     self.backroundImage.image = image
                     registration.Registration().postImage = image
-                    self.textFieldOutlet.becomeFirstResponder()
+                    self.lastTextField.becomeFirstResponder()
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
                 self.presentViewController(cameraViewController, animated: true, completion: nil)
@@ -427,7 +374,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         })
         
         alertNew.showCloseButton = true
-        alertNew.showSuccess("Change profile image", subTitle: "Choose image source", closeButtonTitle: "Cancel", duration: 20.0, colorStyle: 0x009933, colorTextButton: 0xFFFFFF)
+        alertNew.showSuccess("Set profile image", subTitle: "Choose image source", closeButtonTitle: "Cancel", duration: 20.0, colorStyle: 0x009933, colorTextButton: 0xFFFFFF)
         
     }
     // if no Camera!!
@@ -437,88 +384,20 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     
-    func refresh(){
-        print("firstname is: \(registation.firsName)")
-        print("last name is: \(registation.lastName)")
-        print("date of birth is:\(registation.dateOfBirth)")
-        print("gender is: \(registation.gender)")
-        print("address is: \(registation.address)")
-        print("zipCode is: \(registation.zipCode)")
-        print("email is: \(registation.email)")
-        print("phoneNumber is: \(registation.phoneNumber)")
-        print("username is: \(registation.username)")
-        print("password is: \(registation.password)")
-        print("confirmPassword is: \(registation.confirmPassword)")
-        print("Image is: \(registation.postImage)")
-        print("textfield tag is\(textFieldOutlet.tag)")
-    }
     
-    func configureCase (dataModel data: Registration!, descriptionLabel: UILabel, descriptionLabelhidden: Bool,  atributePlaceholder: String, textField: DesignableTextField, currentCase: Int, NextTag: Int, backbutton: UIBarButtonItem, backBntHidden: Bool, userImage: UIImageView, userImageHidden: Bool, selectedImg: UIButton, selectedImgHidden : Bool)
-    {
-        
-        descriptionLabel.hidden = descriptionLabelhidden
-        textField.attributedPlaceholder = NSAttributedString(string: atributePlaceholder, attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()] )
-        textField.tag = NextTag
-        
-        backbutton.enabled = backBntHidden
-        userImage.hidden = userImageHidden
-        selectedImg.hidden = selectedImgHidden
-        
-        switch currentCase{
-        case 0: data.firsName = textField.text!
-        textField.text = ""
-            break
-        case 1: data.lastName = textField.text!
-        textField.text = ""
-            break
-        case 2: data.dateOfBirth = textField.text!
-        textField.text = ""
-            break
-        case 3: data.gender = textField.text!
-        textField.text = ""
-            break
-        case 4: data.address = textField.text!
-        textField.text = ""
-            break
-        case 5: data.zipCode = textField.text!
-        textField.text = ""
-            break
-        case 6: data.email = textField.text!
-        textField.text = ""
-            break
-        case 7: data.phoneNumber = textField.text!
-        textField.text = ""
-            break
-        case 8: data.username = textField.text!
-        textField.text = ""
-            break
-        case 9: data.password = textField.text!
-        textField.text = ""
-            break
-        case 10: data.confirmPassword = textField.text!
-        textField.text = ""
-            break
-            
-        default:
-            break
-        }
-        
-    }
-    
-    @IBAction func nextBtnPressed(sender: customButton)
+    @IBAction func nextBtnPressed(sender: UIButton)
     {
         self.PrepareForm(self.registation.NextPage(lastTextField.text!))
         
         lastTextField.text = ""
         
-       
     }
     
     
-    @IBAction func backPressed(sender: customButton) {
+    @IBAction func backPressed(sender: UIButton) {
         
         self.PrepareForm(self.registation.PreviousPage())
-      
+        
     }
 }
 
